@@ -1,638 +1,794 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
-  <title>Guia Visual de Redes Industriais</title>
-  <!-- Font Awesome (ícones) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    /* ===== RESET & BASE ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-      background: #f5f7fa;
-      color: #1e2a3a;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ===== LAYOUT PRINCIPAL ===== */
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px;
-      width: 100%;
-    }
-
-    /* ===== HEADER ===== */
-    header {
-      background: linear-gradient(145deg, #0b1c2e, #1a2f44);
-      color: white;
-      padding: 32px 0 24px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-      border-bottom: 4px solid #f39c12;
-    }
-
-    header h1 {
-      font-size: 2.2rem;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    header h1 i {
-      color: #f39c12;
-      font-size: 2.4rem;
-    }
-
-    .header-desc {
-      font-size: 1.1rem;
-      color: #cbd5e1;
-      margin-top: 8px;
-      font-weight: 300;
-      border-left: 4px solid #f39c12;
-      padding-left: 18px;
-      max-width: 700px;
-    }
-
-    /* ===== NAVEGAÇÃO (ABAS) ===== */
-    .tab-nav {
-      display: flex;
-      gap: 8px;
-      margin: 28px 0 16px;
-      border-bottom: 2px solid #d0d9e6;
-      padding-bottom: 6px;
-      flex-wrap: wrap;
-    }
-
-    .tab-btn {
-      background: transparent;
-      border: none;
-      padding: 12px 28px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #3a4b5e;
-      cursor: pointer;
-      border-radius: 40px 40px 0 0;
-      transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      letter-spacing: 0.3px;
-      background: #eef2f7;
-      box-shadow: 0 -2px 4px rgba(0,0,0,0.02);
-    }
-
-    .tab-btn i {
-      font-size: 1.3rem;
-      color: #2c5f8a;
-    }
-
-    .tab-btn:hover {
-      background: #dce4ef;
-      transform: translateY(-2px);
-    }
-
-    .tab-btn.active {
-      background: #1a3a57;
-      color: white;
-      box-shadow: 0 4px 10px rgba(26, 58, 87, 0.3);
-    }
-
-    .tab-btn.active i {
-      color: #f1c40f;
-    }
-
-    /* ===== CONTEÚDO DAS ABAS ===== */
-    .tab-content {
-      display: none;
-      animation: fadeSlide 0.4s ease;
-      padding: 12px 0 30px;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    @keyframes fadeSlide {
-      0% { opacity: 0.3; transform: translateY(12px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ===== CARDS (CABOS) ===== */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-      margin: 18px 0 12px;
-    }
-
-    .card-item {
-      background: white;
-      border-radius: 28px;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 20, 40, 0.08);
-      padding: 24px 22px 18px;
-      transition: all 0.25s ease;
-      border: 1px solid #eaf0f6;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card-item:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 36px rgba(0, 30, 60, 0.12);
-      border-color: #b6ccde;
-    }
-
-    .card-item h3 {
-      font-size: 1.7rem;
-      font-weight: 600;
-      color: #0b2a44;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 6px;
-    }
-
-    .card-item h3 i {
-      color: #f39c12;
-      font-size: 2rem;
-    }
-
-    .card-summary {
-      color: #2e4057;
-      font-weight: 400;
-      font-size: 1rem;
-      margin-top: 4px;
-      opacity: 0.8;
-    }
-
-    /* Área expansível (detalhes) */
-    .card-detail {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.3s ease, margin 0.3s;
-      opacity: 0;
-      margin-top: 0;
-      background: #f0f6fe;
-      border-radius: 20px;
-      padding: 0 18px;
-      border-left: 4px solid #2a6f97;
-    }
-
-    .card-detail.open {
-      max-height: 600px; /* suficiente para o conteúdo */
-      opacity: 1;
-      margin-top: 18px;
-      padding: 18px 18px 14px;
-    }
-
-    .card-detail ul {
-      list-style: none;
-      margin: 8px 0 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 14px;
-    }
-
-    .card-detail ul li {
-      background: #dce8f5;
-      padding: 3px 14px;
-      border-radius: 40px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #103a5a;
-    }
-
-    .card-detail p {
-      background: white;
-      padding: 12px 16px;
-      border-radius: 20px;
-      margin-top: 8px;
-      font-size: 0.98rem;
-      box-shadow: inset 0 1px 4px rgba(0,0,0,0.02);
-      color: #1b344b;
-    }
-
-    .card-detail p i {
-      color: #f39c12;
-      margin-right: 8px;
-    }
-
-    /* ===== TOPOLOGIAS ===== */
-    .topo-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin: 28px 0 18px;
-    }
-
-    .topo-btn {
-      background: white;
-      border: none;
-      padding: 16px 40px;
-      border-radius: 60px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #1f3a57;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04);
-      border: 1px solid #d2dfec;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: #fafcff;
-    }
-
-    .topo-btn i {
-      font-size: 1.8rem;
-      color: #2a6f97;
-    }
-
-    .topo-btn:hover {
-      background: #e3eef9;
-      transform: scale(1.02);
-      border-color: #8bb3d1;
-    }
-
-    .topo-btn.active {
-      background: #1a3a57;
-      color: white;
-      border-color: #1a3a57;
-      box-shadow: 0 8px 18px rgba(26, 58, 87, 0.25);
-    }
-
-    .topo-btn.active i {
-      color: #f1c40f;
-    }
-
-    /* painel de detalhes da topologia */
-    .topo-detail {
-      background: white;
-      border-radius: 32px;
-      padding: 0 24px;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.3s ease, padding 0.3s;
-      opacity: 0;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-      margin-top: 0;
-      border: 1px solid #e3ebf3;
-    }
-
-    .topo-detail.open {
-      max-height: 700px;
-      opacity: 1;
-      padding: 24px 24px 18px;
-      margin-top: 24px;
-    }
-
-    .topo-detail h4 {
-      font-size: 1.6rem;
-      color: #0b2a44;
-      border-bottom: 3px solid #f39c12;
-      padding-bottom: 6px;
-      display: inline-block;
-      margin-bottom: 16px;
-    }
-
-    .topo-detail p {
-      background: #f2f8ff;
-      padding: 14px 20px;
-      border-radius: 30px;
-      font-size: 1.05rem;
-      margin: 12px 0 16px;
-    }
-
-    .topo-detail .vantagens, .topo-detail .desvantagens {
-      margin: 12px 0 6px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px 30px;
-    }
-
-    .topo-detail .vantagens span, .topo-detail .desvantagens span {
-      background: #e7f0fa;
-      padding: 4px 18px;
-      border-radius: 40px;
-      font-weight: 500;
-      color: #1a3f5e;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .topo-detail .vantagens i { color: #27ae60; }
-    .topo-detail .desvantagens i { color: #e67e22; }
-
-    /* ===== RODAPÉ ===== */
-    footer {
-      margin-top: auto;
-      background: #0b1c2e;
-      color: #b0c7dd;
-      padding: 28px 0 18px;
-      border-top: 3px solid #f39c12;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-
-    footer .footer-icons i {
-      font-size: 1.4rem;
-      margin: 0 8px;
-      color: #7f9bb5;
-    }
-
-    footer p {
-      margin: 4px 0;
-    }
-
-    footer span {
-      color: #e0e9f5;
-      font-weight: 500;
-    }
-
-    /* ===== RESPONSIVIDADE ===== */
-    @media (max-width: 700px) {
-      header h1 { font-size: 1.8rem; }
-      .tab-btn { padding: 8px 18px; font-size: 1rem; }
-      .card-grid { grid-template-columns: 1fr; }
-      .topo-btn { width: 100%; justify-content: center; }
-    }
-
-    @media (max-width: 480px) {
-      .container { padding: 0 16px; }
-      header { padding: 22px 0; }
-    }
-
-    /* Ajuste ícones */
-    .fa-regular, .fas, .far, .fab, .fa-solid {
-      line-height: 1;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>RedeLab Industrial · Guia de Redes</title>
+    <!-- Font Awesome (ícones) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ===== RESET & VARIÁVEIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --azul-escuro: #0b1a2b;
+            --azul-medio: #1a3a5e;
+            --azul-claro: #d4e2f0;
+            --cinza: #2f4057;
+            --branco: #f5f9ff;
+            --verde: #27ae60;
+            --laranja: #f39c12;
+            --vidro: rgba(255, 255, 255, 0.15);
+            --sombra: 0 20px 40px rgba(0, 0, 0, 0.2);
+            --radius: 32px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: var(--branco);
+            color: #1e2a3a;
+            line-height: 1.6;
+            transition: background 0.4s, color 0.4s;
+            overflow-x: hidden;
+        }
+        body.dark {
+            background: #0d1b2a;
+            color: #e8edf5;
+        }
+        body.dark .card,
+        body.dark .topo-detail,
+        body.dark .quiz-card,
+        body.dark .curiosidade-card {
+            background: rgba(20, 40, 60, 0.7);
+            backdrop-filter: blur(6px);
+            border-color: #2a4a6a;
+        }
+        body.dark header {
+            background: linear-gradient(145deg, #051220, #0f2a44);
+        }
+        body.dark .tab-btn {
+            background: #1a3045;
+            color: #c0d0e0;
+        }
+        body.dark .tab-btn.active {
+            background: #2a5a82;
+            color: white;
+        }
+        body.dark .card-item {
+            background: rgba(20, 40, 60, 0.6);
+            backdrop-filter: blur(4px);
+            border-color: #2a4a6a;
+        }
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(145deg, #0b1c2e, #1a334a);
+            color: white;
+            padding: 20px 0 14px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 4px solid var(--laranja);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+        .header-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo h1 i {
+            color: var(--laranja);
+        }
+        .nav-menu {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .nav-menu a {
+            color: #cbdae8;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .nav-menu a:hover {
+            background: var(--laranja);
+            color: #0b1c2e;
+            transform: scale(1.02);
+        }
+        .nav-menu a i {
+            margin-right: 6px;
+        }
+        .dark-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            padding: 6px 14px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .dark-toggle:hover {
+            background: var(--laranja);
+            color: #0b1c2e;
+        }
+        /* ===== BANNER ===== */
+        .banner {
+            background: linear-gradient(135deg, #0b1c2e 0%, #1a3a5e 100%);
+            border-radius: var(--radius);
+            margin: 28px 0 20px;
+            padding: 40px 40px 50px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            box-shadow: var(--sombra);
+            position: relative;
+            overflow: hidden;
+        }
+        .banner::after {
+            content: '';
+            position: absolute;
+            right: -40px;
+            top: -40px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(243, 156, 18, 0.15), transparent);
+            border-radius: 50%;
+        }
+        .banner-text {
+            flex: 1 1 300px;
+            color: white;
+            z-index: 2;
+        }
+        .banner-text h2 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .banner-text p {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            margin: 12px 0 18px;
+        }
+        .btn-explorar {
+            background: var(--laranja);
+            border: none;
+            padding: 14px 40px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0b1c2e;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+        }
+        .btn-explorar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(243, 156, 18, 0.5);
+        }
+        .banner-img {
+            flex: 1 1 300px;
+            text-align: center;
+            z-index: 2;
+        }
+        .banner-img img {
+            max-width: 100%;
+            border-radius: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            max-height: 250px;
+            object-fit: cover;
+            width: 100%;
+        }
+        /* ===== ABAS ===== */
+        .tab-nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: 30px 0 16px;
+            border-bottom: 2px solid #c0d0e0;
+            padding-bottom: 6px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 24px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #2f4057;
+            cursor: pointer;
+            border-radius: 40px 40px 0 0;
+            transition: var(--transition);
+            background: #eef2f7;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn i {
+            color: var(--azul-medio);
+        }
+        .tab-btn:hover {
+            background: #dce4ef;
+            transform: translateY(-2px);
+        }
+        .tab-btn.active {
+            background: var(--azul-medio);
+            color: white;
+            box-shadow: 0 4px 12px rgba(26, 58, 94, 0.3);
+        }
+        .tab-btn.active i {
+            color: var(--laranja);
+        }
+        .tab-content {
+            display: none;
+            animation: fadeUp 0.5s ease;
+            padding: 12px 0 30px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeUp {
+            0% {
+                opacity: 0.3;
+                transform: translateY(16px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* ===== CARDS CABOS ===== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 18px 0;
+        }
+        .card-item {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+            padding: 0 0 20px 0;
+            transition: var(--transition);
+            border: 1px solid #eaf0f6;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 44px rgba(0, 30, 60, 0.12);
+        }
+        .card-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--laranja);
+        }
+        .card-item .card-body {
+            padding: 18px 20px 12px;
+        }
+        .card-item h3 {
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--azul-escuro);
+        }
+        .card-item h3 i {
+            color: var(--laranja);
+        }
+        .card-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.3s, padding 0.3s;
+            opacity: 0;
+            padding: 0 20px;
+        }
+        .card-detail.open {
+            max-height: 500px;
+            opacity: 1;
+            padding: 8px 20px 20px;
+        }
+        .card-detail ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 12px;
+            margin: 6px 0 10px;
+        }
+        .card-detail ul li {
+            background: var(--azul-claro);
+            padding: 2px 14px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .card-detail p {
+            background: #f0f7ff;
+            padding: 12px 16px;
+            border-radius: 20px;
+            border-left: 4px solid var(--laranja);
+        }
+        /* ===== TOPOLOGIAS ===== */
+        .topo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .topo-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            border: 1px solid #dce6f0;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .topo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+        }
+        .topo-card img {
+            width: 100%;
+            border-radius: 20px;
+            max-height: 160px;
+            object-fit: cover;
+        }
+        .topo-card h4 {
+            font-size: 1.6rem;
+            margin: 12px 0 6px;
+            color: var(--azul-escuro);
+        }
+        .topo-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.3s, padding 0.3s;
+            opacity: 0;
+            padding: 0 4px;
+        }
+        .topo-detail.open {
+            max-height: 700px;
+            opacity: 1;
+            padding: 12px 4px 20px;
+        }
+        .topo-detail .vantagens,
+        .topo-detail .desvantagens {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 20px;
+            margin: 6px 0;
+        }
+        .topo-detail .vantagens span {
+            color: var(--verde);
+        }
+        .topo-detail .desvantagens span {
+            color: #e67e22;
+        }
+        .diagrama {
+            background: #eaf0f6;
+            padding: 16px;
+            border-radius: 24px;
+            margin-top: 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+        /* ===== QUIZ ===== */
+        .quiz-container {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 10px;
+            background: #dce4ef;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--laranja);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .quiz-opcoes button {
+            display: block;
+            width: 100%;
+            padding: 14px 18px;
+            margin: 8px 0;
+            border: 2px solid #dce4ef;
+            border-radius: 60px;
+            background: white;
+            font-size: 1rem;
+            text-align: left;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .quiz-opcoes button:hover {
+            background: #eef4fa;
+        }
+        .quiz-opcoes button.correta {
+            border-color: var(--verde);
+            background: #d5f5e3;
+        }
+        .quiz-opcoes button.incorreta {
+            border-color: #e74c3c;
+            background: #fadbd8;
+        }
+        .btn-jogar {
+            background: var(--azul-medio);
+            color: white;
+            border: none;
+            padding: 12px 36px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-jogar:hover {
+            transform: scale(1.03);
+            background: var(--laranja);
+            color: #0b1c2e;
+        }
+        /* ===== ARRASTAR ===== */
+        .drag-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .drag-item {
+            background: var(--azul-medio);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: grab;
+            transition: var(--transition);
+            user-select: none;
+        }
+        .drag-item:active {
+            cursor: grabbing;
+        }
+        .drop-zone {
+            background: #eaf0f6;
+            border: 3px dashed var(--azul-medio);
+            border-radius: 40px;
+            padding: 20px 30px;
+            min-height: 80px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+        }
+        .drop-zone.drag-over {
+            border-color: var(--laranja);
+            background: #fef5e7;
+        }
+        .drop-zone .drag-item {
+            background: var(--verde);
+        }
+        /* ===== CURIOSIDADES ===== */
+        .curiosidades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin: 20px 0;
+        }
+        .curiosidade-card {
+            background: white;
+            padding: 24px 18px;
+            border-radius: var(--radius);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+            border-left: 6px solid var(--laranja);
+            transition: var(--transition);
+        }
+        .curiosidade-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+        }
+        /* ===== SOBRE ===== */
+        .sobre-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+            background: #eef4fa;
+            border-radius: var(--radius);
+            padding: 30px;
+        }
+        .sobre-area img {
+            max-width: 100%;
+            border-radius: 24px;
+            flex: 1 1 260px;
+        }
+        .sobre-text {
+            flex: 2 1 300px;
+        }
+        /* ===== RODAPÉ ===== */
+        footer {
+            background: var(--azul-escuro);
+            color: #b0c7dd;
+            padding: 30px 0 18px;
+            border-top: 4px solid var(--laranja);
+            text-align: center;
+            margin-top: 30px;
+        }
+        footer .footer-icons i {
+            font-size: 1.8rem;
+            margin: 0 10px;
+            color: #7f9bb5;
+        }
+        .btn-topo {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--laranja);
+            color: #0b1c2e;
+            border: none;
+            border-radius: 60px;
+            padding: 14px 20px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(243, 156, 18, 0.3);
+            transition: var(--transition);
+            z-index: 99;
+        }
+        .btn-topo:hover {
+            transform: scale(1.1);
+        }
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 700px) {
+            .header-flex {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .nav-menu {
+                justify-content: center;
+            }
+            .banner-text h2 {
+                font-size: 2rem;
+            }
+            .tab-btn {
+                padding: 6px 14px;
+                font-size: 0.9rem;
+            }
+        }
+        /* ===== PARTICLES ===== */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        body.dark #particles-canvas {
+            opacity: 0.5;
+        }
+        /* ===== LOADING ===== */
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: #0b1c2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+            font-size: 2rem;
+            transition: opacity 0.6s;
+        }
+        #loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
 
-<!-- ===== HEADER ===== -->
-<header>
-  <div class="container">
-    <h1>
-      <i class="fas fa-microchip"></i> 
-      Guia Visual de Redes Industriais
-    </h1>
-    <div class="header-desc">
-      <i class="fas fa-network-wired" style="margin-right: 10px; color: #f39c12;"></i>
-      Conheça os principais meios de comunicação utilizados em redes industriais e suas topologias.
-    </div>
-  </div>
-</header>
+    <!-- LOADING -->
+    <div id="loading"><i class="fas fa-cog fa-spin fa-3x"></i> Carregando...</div>
 
-<!-- ===== CONTEÚDO PRINCIPAL ===== -->
-<main class="container">
+    <!-- PARTICLES -->
+    <canvas id="particles-canvas"></canvas>
 
-  <!-- Navegação por abas -->
-  <div class="tab-nav">
-    <button class="tab-btn active" data-tab="tab1"><i class="fas fa-plug"></i> Cabos Industriais</button>
-    <button class="tab-btn" data-tab="tab2"><i class="fas fa-sitemap"></i> Topologias</button>
-  </div>
-
-  <!-- ========== ABA 1: CABOS ========== -->
-  <div id="tab1" class="tab-content active">
-    <div class="card-grid">
-
-      <!-- Card 1: Par Trançado -->
-      <div class="card-item" data-detail="detail1">
-        <h3><i class="fas fa-ethernet"></i> Par Trançado</h3>
-        <div class="card-summary">Ethernet industrial · baixo custo</div>
-        <div id="detail1" class="card-detail">
-          <ul>
-            <li><i class="fas fa-check-circle" style="color:#2a7f4b;"></i> CLPs</li>
-            <li><i class="fas fa-check-circle" style="color:#2a7f4b;"></i> IHMs</li>
-            <li><i class="fas fa-check-circle" style="color:#2a7f4b;"></i> Switches</li>
-            <li><i class="fas fa-check-circle" style="color:#2a7f4b;"></i> Computadores</li>
-          </ul>
-          <p><i class="fas fa-info-circle"></i> O cabo par trançado é o mais utilizado em redes Ethernet industriais por oferecer baixo custo, facilidade de instalação e boa velocidade.</p>
+    <!-- HEADER -->
+    <header>
+        <div class="container header-flex">
+            <div class="logo">
+                <h1><i class="fas fa-microchip"></i> RedeLab</h1>
+            </div>
+            <nav class="nav-menu" id="menuNav">
+                <a href="#" data-target="inicio"><i class="fas fa-home"></i> Início</a>
+                <a href="#" data-target="cabos"><i class="fas fa-plug"></i> Cabos</a>
+                <a href="#" data-target="topologias"><i class="fas fa-sitemap"></i> Topologias</a>
+                <a href="#" data-target="quiz"><i class="fas fa-brain"></i> Quiz</a>
+                <a href="#" data-target="sobre"><i class="fas fa-info-circle"></i> Sobre</a>
+            </nav>
+            <button class="dark-toggle" id="darkToggle"><i class="fas fa-moon"></i></button>
         </div>
-      </div>
+    </header>
 
-      <!-- Card 2: Fibra Óptica -->
-      <div class="card-item" data-detail="detail2">
-        <h3><i class="fas fa-fiber-optic"></i> Fibra Óptica</h3>
-        <div class="card-summary">Alta velocidade · imunidade a ruído</div>
-        <div id="detail2" class="card-detail">
-          <ul>
-            <li><i class="fas fa-check-circle" style="color:#2a7f4b;"></i> Galpões</li>
-            <li><i class="fas fa-check-circle" style="color:#2a7f4b;"></i> Longas distâncias</li>
-            <li><i class="fas fa-check-circle" style="color:#2a7f4b;"></i> Ambientes ruidosos</li>
-          </ul>
-          <p><i class="fas fa-info-circle"></i> A fibra óptica transmite dados por luz, oferecendo alta velocidade e imunidade a interferências elétricas.</p>
+    <main class="container">
+
+        <!-- BANNER -->
+        <section id="inicio" class="banner">
+            <div class="banner-text">
+                <h2>Guia Visual de <br>Redes Industriais</h2>
+                <p>Conheça os meios físicos, topologias e aplicações em fábricas automatizadas.</p>
+                <button class="btn-explorar" id="btnExplorar"><i class="fas fa-arrow-down"></i> Explorar Conteúdo</button>
+            </div>
+            <div class="banner-img">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=500&h=250&fit=crop&crop=center" alt="Fábrica automatizada">
+            </div>
+        </section>
+
+        <!-- NAVEGAÇÃO ABAS -->
+        <div class="tab-nav">
+            <button class="tab-btn active" data-tab="tabCabos"><i class="fas fa-network-wired"></i> Cabos Industriais</button>
+            <button class="tab-btn" data-tab="tabTopo"><i class="fas fa-sitemap"></i> Topologias</button>
+            <button class="tab-btn" data-tab="tabQuiz"><i class="fas fa-question-circle"></i> Quiz</button>
+            <button class="tab-btn" data-tab="tabCuriosidades"><i class="fas fa-lightbulb"></i> Curiosidades</button>
+            <button class="tab-btn" data-tab="tabSobre"><i class="fas fa-robot"></i> Sobre</button>
         </div>
-      </div>
 
-      <!-- Card 3: Wireless -->
-      <div class="card-item" data-detail="detail3">
-        <h3><i class="fas fa-wifi"></i> Wireless</h3>
-        <div class="card-summary">Mobilidade · fácil instalação</div>
-        <div id="detail3" class="card-detail">
-          <ul>
-            <li><i class="fas fa-check-circle" style="color:#2a7f4b;"></i> Tablets</li>
-            <li><i class="fas fa-check-circle" style="color:#2a7f4b;"></i> Coletores de dados</li>
-            <li><i class="fas fa-check-circle" style="color:#2a7f4b;"></i> AGVs</li>
-            <li><i class="fas fa-check-circle" style="color:#2a7f4b;"></i> Sensores IoT</li>
-          </ul>
-          <p><i class="fas fa-info-circle"></i> O Wireless permite comunicação sem cabos, oferecendo mobilidade e facilidade de instalação.</p>
+        <!-- ========== CABOS ========== -->
+        <div id="tabCabos" class="tab-content active">
+            <h2 style="margin-bottom: 8px;"><i class="fas fa-plug" style="color:var(--laranja);"></i> Meios de comunicação</h2>
+            <div class="card-grid">
+                <!-- Card 1 -->
+                <div class="card-item" data-detail="det1">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&h=180&fit=crop" alt="Cabo par trançado">
+                    <div class="card-body">
+                        <h3><i class="fas fa-ethernet"></i> Par Trançado</h3>
+                        <p style="color:var(--cinza);">Ethernet industrial · baixo custo</p>
+                        <div id="det1" class="card-detail">
+                            <ul><li>CLPs</li><li>IHMs</li><li>Switches</li><li>Computadores</li></ul>
+                            <p><i class="fas fa-info-circle"></i> O cabo par trançado é o mais utilizado em redes Ethernet industriais por oferecer baixo custo, facilidade de instalação e boa velocidade.</p>
+                        </div>
+                        <button class="btn-saiba" style="background:var(--laranja);border:none;padding:8px 24px;border-radius:40px;font-weight:600;cursor:pointer;margin-top:6px;">Saiba mais</button>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="card-item" data-detail="det2">
+                    <img src="https://images.unsplash.com/photo-1616400619175-5beda3a17896?w=400&h=180&fit=crop" alt="Fibra óptica">
+                    <div class="card-body">
+                        <h3><i class="fas fa-fiber-optic"></i> Fibra Óptica</h3>
+                        <p style="color:var(--cinza);">Alta velocidade · imunidade a ruído</p>
+                        <div id="det2" class="card-detail">
+                            <ul><li>Galpões</li><li>Longas distâncias</li><li>Ambientes ruidosos</li></ul>
+                            <p><i class="fas fa-info-circle"></i> A fibra óptica transmite dados por luz, oferecendo alta velocidade e imunidade a interferências elétricas.</p>
+                        </div>
+                        <button class="btn-saiba" style="background:var(--laranja);border:none;padding:8px 24px;border-radius:40px;font-weight:600;cursor:pointer;margin-top:6px;">Saiba mais</button>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="card-item" data-detail="det3">
+                    <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=180&fit=crop" alt="Wireless industrial">
+                    <div class="card-body">
+                        <h3><i class="fas fa-wifi"></i> Wireless</h3>
+                        <p style="color:var(--cinza);">Mobilidade · fácil instalação</p>
+                        <div id="det3" class="card-detail">
+                            <ul><li>AGVs</li><li>Tablets</li><li>IoT</li><li>Coletores</li></ul>
+                            <p><i class="fas fa-info-circle"></i> O Wireless permite comunicação sem cabos, oferecendo mobilidade e facilidade de instalação.</p>
+                        </div>
+                        <button class="btn-saiba" style="background:var(--laranja);border:none;padding:8px 24px;border-radius:40px;font-weight:600;cursor:pointer;margin-top:6px;">Saiba mais</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- ========== ABA 2: TOPOLOGIAS ========== -->
-  <div id="tab2" class="tab-content">
-    <div class="topo-buttons">
-      <button class="topo-btn" data-topo="estrela"><i class="fas fa-star"></i> Layout em Estrela</button>
-      <button class="topo-btn" data-topo="barramento"><i class="fas fa-bars"></i> Layout em Barramento</button>
-    </div>
+        <!-- ========== TOPOLOGIAS ========== -->
+        <div id="tabTopo" class="tab-content">
+            <h2 style="margin-bottom:8px;"><i class="fas fa-sitemap" style="color:var(--laranja);"></i> Topologias de Rede</h2>
+            <div class="topo-grid">
+                <div class="topo-card" data-topo="estrela">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=160&fit=crop" alt="Topologia estrela">
+                    <h4><i class="fas fa-star" style="color:var(--laranja);"></i> Estrela</h4>
+                    <p>Todos os equipamentos ligados a um switch central.</p>
+                    <div id="topo-estrela" class="topo-detail">
+                        <p><i class="fas fa-check-circle" style="color:var(--verde);"></i> Vantagens: Fácil manutenção, localizar falhas, expansão.</p>
+                        <p><i class="fas fa-exclamation-triangle" style="color:#e67e22;"></i> Desvantagens: Dependência do switch, mais cabos.</p>
+                        <div class="diagrama">🖥️ ── 🖥️ ── 🖥️ <br> ╲ ╱ <br>  🔀 (switch) </div>
+                    </div>
+                </div>
+                <div class="topo-card" data-topo="barramento">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=160&fit=crop" alt="Topologia barramento">
+                    <h4><i class="fas fa-bars" style="color:var(--laranja);"></i> Barramento</h4>
+                    <p>Dispositivos compartilham um único cabo principal.</p>
+                    <div id="topo-barramento" class="topo-detail">
+                        <p><i class="fas fa-check-circle" style="color:var(--verde);"></i> Vantagens: Baixo custo, instalação simples.</p>
+                        <p><i class="fas fa-exclamation-triangle" style="color:#e67e22;"></i> Desvantagens: Falha interrompe a rede, difícil localizar.</p>
+                        <div class="diagrama">🖥️ ── 🖥️ ── 🖥️ <br> (cabo principal) </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!-- Detalhe Estrela -->
-    <div id="topo-estrela" class="topo-detail">
-      <h4><i class="fas fa-star" style="color:#f39c12;"></i> Estrela</h4>
-      <p><i class="fas fa-arrows-spin" style="color:#2a6f97;"></i> Todos os equipamentos são ligados a um switch central.</p>
-      <div class="vantagens">
-        <span><i class="fas fa-check-circle"></i> Fácil manutenção</span>
-        <span><i class="fas fa-check-circle"></i> Fácil localizar falhas</span>
-        <span><i class="fas fa-check-circle"></i> Boa organização</span>
-        <span><i class="fas fa-check-circle"></i> Fácil expansão</span>
-      </div>
-      <div class="desvantagens">
-        <span><i class="fas fa-exclamation-triangle"></i> Dependência do switch</span>
-        <span><i class="fas fa-exclamation-triangle"></i> Maior quantidade de cabos</span>
-        <span><i class="fas fa-exclamation-triangle"></i> Custo um pouco maior</span>
-      </div>
-    </div>
+        <!-- ========== QUIZ ========== -->
+        <div id="tabQuiz" class="tab-content">
+            <h2><i class="fas fa-brain" style="color:var(--laranja);"></i> Desafio das Redes Industriais</h2>
+            <div class="quiz-container" id="quizContainer">
+                <div class="quiz-header">
+                    <span id="perguntaNum">1/15</span>
+                    <span id="pontuacao">🏆 0</span>
+                    <span id="timer">⏱️ 20s</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <div id="perguntaTexto" style="font-size:1.3rem;font-weight:600;margin:12px 0;">Clique em "Começar"</div>
+                <div class="quiz-opcoes" id="opcoesContainer"></div>
+                <div id="explicacao" style="margin:12px 0;padding:12px;border-radius:20px;background:#f0f7ff;"></div>
+                <button class="btn-jogar" id="btnComecarQuiz"><i class="fas fa-play"></i> Começar</button>
+                <button class="btn-jogar" id="btnProximo" style="display:none;background:var(--verde);">Próxima ➜</button>
+                <div id="resultadoFinal" style="margin-top:16px;font-size:1.4rem;font-weight:700;"></div>
+            </div>
+            <hr style="margin:30px 0;">
+            <h3><i class="fas fa-arrows-alt" style="color:var(--laranja);"></i> Mini Game: Arraste e Solte</h3>
+            <p>Arraste o nome do cabo até a descrição correta.</p>
+            <div class="drag-area" id="dragArea">
+                <div class="drag-item" draggable="true" data-nome="par">Par Trançado</div>
+                <div class="drag-item" draggable="true" data-nome="fibra">Fibra Óptica</div>
+                <div class="drag-item" draggable="true" data-nome="wireless">Wireless</div>
+            </div>
+            <div class="drop-zone" id="dropZone"><span style="opacity:0.6;">Solte aqui a descrição correta</span></div>
+            <div id="dragScore" style="font-weight:700;margin:10px 0;">Pontos: 0</div>
+        </div>
 
-    <!-- Detalhe Barramento -->
-    <div id="topo-barramento" class="topo-detail">
-      <h4><i class="fas fa-bars" style="color:#f39c12;"></i> Barramento</h4>
-      <p><i class="fas fa-arrows-spin" style="color:#2a6f97;"></i> Todos os dispositivos compartilham um único cabo principal.</p>
-      <div class="vantagens">
-        <span><i class="fas fa-check-circle"></i> Baixo custo</span>
-        <span><i class="fas fa-check-circle"></i> Instalação simples</span>
-        <span><i class="fas fa-check-circle"></i> Menor quantidade de cabos</span>
-      </div>
-      <div class="desvantagens">
-        <span><i class="fas fa-exclamation-triangle"></i> Uma falha pode interromper toda a rede</span>
-        <span><i class="fas fa-exclamation-triangle"></i> Difícil localizar defeitos</span>
-        <span><i class="fas fa-exclamation-triangle"></i> Pouco utilizado atualmente</span>
-      </div>
-    </div>
-  </div>
+        <!-- ========== CURIOSIDADES ========== -->
+        <div id="tabCuriosidades" class="tab-content">
+            <h2><i class="fas fa-lightbulb" style="color:var(--laranja);"></i> Curiosidades</h2>
+            <div class="curiosidades-grid">
+                <div class="curiosidade-card"><i class="fas fa-clock" style="color:var(--laranja);"></i> <strong>Ethernet Industrial</strong> — Surgiu nos anos 80 e hoje é padrão em fábricas.</div>
+                <div class="curiosidade-card"><i class="fas fa-clock" style="color:var(--laranja);"></i> <strong>Profinet</strong> — Desenvolvido pela Siemens, é amplamente usado na Europa.</div>
+                <div class="curiosidade-card"><i class="fas fa-clock" style="color:var(--laranja);"></i> <strong>Modbus</strong> — Protocolo serial criado em 1979, ainda muito ativo.</div>
+                <div class="curiosidade-card"><i class="fas fa-clock" style="color:var(--laranja);"></i> <strong>EtherNet/IP</strong> — Utiliza o protocolo CIP, comum nos EUA.</div>
+                <div class="curiosidade-card"><i class="fas fa-clock" style="color:var(--laranja);"></i> <strong>Wi-Fi Industrial</strong> — Opera em 2.4GHz e 5GHz com robustez.</div>
+            </div>
+        </div>
 
-</main>
-
-<!-- ===== RODAPÉ ===== -->
-<footer>
-  <div class="container">
-    <p><span>Guia Visual de Redes Industriais</span> &nbsp;·&nbsp; Desenvolvido para fins educacionais.</p>
-    <div class="footer-icons">
-      <i class="fab fa-html5"></i>
-      <i class="fab fa-css3-alt"></i>
-      <i class="fab fa-js"></i>
-    </div>
-    <p style="font-size:0.8rem; opacity:0.7; margin-top: 8px;">HTML · CSS · JavaScript puro — sem frameworks</p>
-  </div>
-</footer>
-
-<!-- ===== SCRIPT (todo o JavaScript) ===== -->
-<script>
-  (function() {
-    "use strict";
-
-    // ---- ELEMENTOS ----
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tabContents = {
-      tab1: document.getElementById('tab1'),
-      tab2: document.getElementById('tab2')
-    };
-
-    // Cards e detalhes
-    const cardItems = document.querySelectorAll('.card-item');
-
-    // Botões de topologia
-    const topoBtns = document.querySelectorAll('.topo-btn');
-    const topoEstrela = document.getElementById('topo-estrela');
-    const topoBarramento = document.getElementById('topo-barramento');
-
-    // ---- FUNÇÕES DE ABAS ----
-    function switchTab(tabId) {
-      // Remove active de todos os botões e conteúdos
-      tabBtns.forEach(btn => btn.classList.remove('active'));
-      Object.values(tabContents).forEach(el => el.classList.remove('active'));
-
-      // Ativa o botão correspondente
-      const activeBtn = Array.from(tabBtns).find(btn => btn.dataset.tab === tabId);
-      if (activeBtn) activeBtn.classList.add('active');
-
-      // Ativa o conteúdo
-      if (tabContents[tabId]) tabContents[tabId].classList.add('active');
-
-      // Fecha todos os detalhes de cards (para não conflitar visualmente)
-      document.querySelectorAll('.card-detail.open').forEach(el => el.classList.remove('open'));
-      // Fecha topologias abertas
-      document.querySelectorAll('.topo-detail.open').forEach(el => el.classList.remove('open'));
-      topoBtns.forEach(btn => btn.classList.remove('active'));
-    }
-
-    // ---- EVENTOS DAS ABAS ----
-    tabBtns.forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        const tabId = this.dataset.tab;
-        if (tabId) switchTab(tabId);
-      });
-    });
-
-    // ---- CARDS: toggle detalhe com animação ----
-    cardItems.forEach(card => {
-      const detailId = card.dataset.detail;
-      if (!detailId) return;
-      const detailEl = document.getElementById(detailId);
-      if (!detailEl) return;
-
-      card.addEventListener('click', function(e) {
-        // Se clicou dentro do detalhe, não fecha (para não atrapalhar)
-        if (e.target.closest('.card-detail')) return;
-
-        const isOpen = detailEl.classList.contains('open');
-        // Fecha todos os outros detalhes (opcional: UX de apenas um aberto)
-        document.querySelectorAll('.card-detail.open').forEach(el => {
-          if (el !== detailEl) el.classList.remove('open');
-        });
-
-        if (isOpen) {
-          detailEl.classList.remove('open');
-        } else {
-          detailEl.classList.add('open');
-        }
-      });
-    });
-
-    // ---- TOPOLOGIAS ----
-    function closeAllTopo() {
-      topoEstrela.classList.remove('open');
-      topoBarramento.classList.remove('open');
-      topoBtns.forEach(btn => btn.classList.remove('active'));
-    }
-
-    topoBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        const tipo = this.dataset.topo;
-        // Se já está ativo, fecha (toggle)
-        if (this.classList.contains('active')) {
-          closeAllTopo();
-          return;
-        }
-
-        // Fecha todos e abre o selecionado
-        closeAllTopo();
-        this.classList.add('active');
-
-        if (tipo === 'estrela') {
-          topoEstrela.classList.add('open');
-        } else if (tipo === 'barramento') {
-          topoBarramento.classList.add('open');
-        }
-      });
-    });
-
-    // Fechar topologias se clicar fora (opcional) mas manter
-    // também ao trocar de aba, já fechamos via switchTab
-
-    // ---- INICIALIZAÇÃO: garantir aba ativa ----
-    // Se a aba ativa for a 1, tudo certo. Se for a 2, garantir.
-    // Mas por padrão a 1 está ativa no HTML.
-    // Fechar qualquer topo aberto
-    closeAllTopo();
-
-    // Fechar detalhes de cards ao mudar de aba (já feito no switch)
-    // Mas garantir que ao carregar, nenhum detalhe aberto
-    document.querySelectorAll('.card-detail.open').forEach(el => el.classList.remove('open'));
-
-    // ---- EXTRA: clicar no fundo (fora) para fechar? não necessário ----
-    // ---- Pequeno ajuste: se clicar em um card e ele estiver aberto, 
-    //      não fecha se clicar dentro do conteúdo (já tratado)
-    console.log('Guia Visual de Redes Industriais carregado com sucesso!');
-  })();
-</script>
-</body>
-</html>
+        <!-- ========== SOBRE ========== -->
+        <div id="tabSobre" class="tab-content">
+            <div class="sobre-area">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2
