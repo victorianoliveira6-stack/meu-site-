@@ -1,1 +1,159 @@
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Visual de Redes para Automação Industrial</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="[cdnjs.cloudflare.com](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="container">
+            <h1>🔌 Guia Visual de Redes para Automação Industrial</h1>
+            <p>Conheça os principais meios físicos de comunicação e topologias utilizadas em redes industriais.</p>
+        </div>
+    </header>
+    <!-- Menu de Navegação -->
+    <nav class="navigation">
+        <div class="container">
+            <button class="nav-btn active" data-tab="cabos">
+                <i class="fas fa-cable-car"></i> Cabos Industriais
+            </button>
+            <button class="nav-btn" data-tab="topologias">
+                <i class="fas fa-network-wired"></i> Topologias
+            </button>
+        </div>
+    </nav>
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Aba Cabos Industriais -->
+            <section id="cabos" class="tab-content active">
+                <h2>📡 Cabos Industriais</h2>
+                <div class="cards-container">
+                    <!-- Card Par Trançado -->
+                    <div class="card" data-card="par-trancado">
+                        <div class="card-header">
+                            <i class="fas fa-ethernet"></i>
+                            <h3>Par Trançado</h3>
+                        </div>
+                        <div class="card-content hidden">
+                            <h4>📍 Onde é usado</h4>
+                            <ul>
+                                <li>Liga CLPs, IHMs, switches industriais e computadores da fábrica</li>
+                                <li>Muito utilizado em redes Ethernet industriais</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Card Fibra Óptica -->
+                    <div class="card" data-card="fibra-optica">
+                        <div class="card-header">
+                            <i class="fas fa-fiber"></i>
+                            <h3>Fibra Óptica</h3>
+                        </div>
+                        <div class="card-content hidden">
+                            <h4>📍 Onde é usada</h4>
+                            <ul>
+                                <li>Comunicação entre setores distantes da fábrica</li>
+                                <li>Ambientes com muito ruído elétrico</li>
+                                <li>Longas distâncias</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Card Wireless -->
+                    <div class="card" data-card="wireless">
+                        <div class="card-header">
+                            <i class="fas fa-wifi"></i>
+                            <h3>Wireless</h3>
+                        </div>
+                        <div class="card-content hidden">
+                            <h4>📍 Onde é usado</h4>
+                            <ul>
+                                <li>Tablets industriais</li>
+                                <li>Coletores de dados</li>
+                                <li>AGVs (Veículos Guiados Automaticamente)</li>
+                                <li>Sensores sem fio</li>
+                                <li>Equipamentos móveis</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Aba Topologias -->
+            <section id="topologias" class="tab-content">
+                <h2>🌐 Topologias</h2>
+                <div class="topology-buttons">
+                    <!-- Botão Estrela -->
+                    <button class="topology-btn" data-topology="estrela">
+                        <i class="fas fa-star"></i> Layout em Estrela
+                    </button>
+                    <!-- Botão Barramento -->
+                    <button class="topology-btn" data-topology="barramento">
+                        <i class="fas fa-minus"></i> Layout em Barramento
+                    </button>
+                </div>
+                <!-- Conteúdo Topologias -->
+                <div class="topology-content">
+                    <!-- Estrela -->
+                    <div id="estrela-content" class="topology-details hidden">
+                        <h3>⭐ Layout em Estrela</h3>
+                        <div class="explanation">
+                            <h4>📋 Explicação</h4>
+                            <p>Todos os dispositivos são ligados a um switch central.</p>
+                            
+                            <div class="pros-cons">
+                                <div class="pros">
+                                    <h4>✅ Vantagens</h4>
+                                    <ul>
+                                        <li>Fácil manutenção</li>
+                                        <li>Fácil localizar falhas</li>
+                                        <li>Boa organização</li>
+                                        <li>Expansão simples</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h4>❌ Desvantagens</h4>
+                                    <ul>
+                                        <li>Depende do switch central</li>
+                                        <li>Mais cabos</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Barramento -->
+                    <div id="barramento-content" class="topology-details hidden">
+                        <h3>➖ Layout em Barramento</h3>
+                        <div class="explanation">
+                            <h4>📋 Explicação</h4>
+                            <p>Todos os dispositivos compartilham o mesmo cabo principal.</p>
+                            
+                            <div class="pros-cons">
+                                <div class="pros">
+                                    <h4>✅ Vantagens</h4>
+                                    <ul>
+                                        <li>Baixo custo</li>
+                                        <li>Menos cabos</li>
+                                        <li>Instalação simples</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h4>❌ Desvantagens</h4>
+                                    <ul>
+                                        <li>Uma falha no cabo pode parar toda a rede</li>
+                                        <li>Difícil localizar problemas</li>
+                                        <li>Pouco utilizado em novas instalações industriais</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
