@@ -1,41 +1,31 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
-    <title>Guia Visual de Redes Industriais</title>
+    <title>Guia Visual de Redes para Automação Industrial</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- LOADING SCREEN -->
-    <div id="loading">
-        <div class="loader"></div>
-        <p>Carregando...</p>
-    </div>
 
-    <!-- BOTÃO VOLTAR AO TOPO -->
-    <button id="btnTopo" class="btn-topo"><i class="fas fa-arrow-up"></i></button>
-
-    <!-- ===== MENU FIXO ===== -->
+    <!-- ===== CABEÇALHO ===== -->
     <header id="header">
         <div class="container header-flex">
             <div class="logo">
                 <i class="fas fa-network-wired"></i>
-                <span>RedeLab</span>
+                <span data-key="titulo">RedeLab</span>
             </div>
-            <button id="menuHamburger" class="menu-hamburger" aria-label="Menu">
-                <i class="fas fa-bars"></i>
-            </button>
+            <div class="header-actions">
+                <button id="idiomaBtn" class="idioma-btn"><i class="fas fa-globe"></i> <span id="idiomaLabel">🇧🇷 PT</span></button>
+                <button id="menuHamburger" class="menu-hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
+            </div>
             <nav id="navMenu" class="nav-menu">
-                <a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a>
-                <a href="#cabos"><i class="fas fa-plug"></i> Cabos</a>
-                <a href="#topologias"><i class="fas fa-sitemap"></i> Topologias</a>
-                <a href="#quiz"><i class="fas fa-brain"></i> Quiz</a>
-                <a href="#curiosidades"><i class="fas fa-lightbulb"></i> Curiosidades</a>
-                <a href="#sobre"><i class="fas fa-info-circle"></i> Sobre</a>
-                <button id="darkToggle" class="dark-toggle"><i class="fas fa-moon"></i></button>
+                <a href="#inicio" class="active" data-key="inicio"><i class="fas fa-home"></i> <span>Início</span></a>
+                <a href="#cabos" data-key="cabos"><i class="fas fa-plug"></i> <span>Cabos</span></a>
+                <a href="#topologias" data-key="topologias"><i class="fas fa-sitemap"></i> <span>Topologias</span></a>
+                <a href="#jogo" data-key="jogo"><i class="fas fa-gamepad"></i> <span>Jogo</span></a>
+                <a href="#sobre" data-key="sobre"><i class="fas fa-info-circle"></i> <span>Sobre</span></a>
             </nav>
         </div>
     </header>
@@ -46,10 +36,9 @@
             <div class="banner-overlay"></div>
             <div class="container banner-grid">
                 <div class="banner-text">
-                    <h1>Guia Visual de <br>Redes Industriais</h1>
-                    <p class="subtitle">Conectando o chão de fábrica com conhecimento</p>
-                    <p>Explore os principais meios físicos, topologias e tecnologias que movem a automação industrial.</p>
-                    <a href="#cabos" class="btn-primary"><i class="fas fa-arrow-down"></i> Explorar Conteúdo</a>
+                    <h1 data-key="bannerTitulo">Guia Visual de Redes para Automação Industrial</h1>
+                    <p class="subtitle" data-key="bannerSubtitulo">Aprenda como os dispositivos industriais se comunicam dentro de uma fábrica.</p>
+                    <a href="#cabos" class="btn-primary" data-key="explorar"><i class="fas fa-arrow-down"></i> Explorar</a>
                 </div>
                 <div class="banner-img">
                     <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=350&fit=crop&crop=center" alt="Fábrica automatizada">
@@ -57,84 +46,59 @@
             </div>
         </section>
 
-        <!-- ===== ESTATÍSTICAS ===== -->
-        <section class="stats" id="stats">
-            <div class="container stats-grid">
-                <div class="stat-item">
-                    <span class="stat-number" data-target="3">0</span>
-                    <span class="stat-label">Meios de Comunicação</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" data-target="2">0</span>
-                    <span class="stat-label">Topologias</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" data-target="15">0</span>
-                    <span class="stat-label">Perguntas no Quiz</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" data-target="5">0</span>
-                    <span class="stat-label">Curiosidades</span>
-                </div>
-            </div>
-        </section>
-
         <!-- ===== CABOS INDUSTRIAIS ===== -->
         <section id="cabos" class="section">
             <div class="container">
-                <h2><i class="fas fa-plug" style="color: var(--laranja);"></i> Cabos Industriais</h2>
-                <p class="section-desc">Os principais meios de comunicação utilizados em redes industriais.</p>
+                <h2 data-key="cabosTitulo"><i class="fas fa-plug" style="color: var(--laranja);"></i> Cabos Industriais</h2>
+                <p class="section-desc" data-key="cabosDesc">Os principais meios de comunicação utilizados em redes industriais.</p>
                 <div class="card-grid">
                     <!-- Card 1: Par Trançado -->
-                    <div class="card-item reveal">
+                    <div class="card-item">
                         <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&h=200&fit=crop" alt="Cabo par trançado">
                         <div class="card-body">
-                            <h3><i class="fas fa-ethernet"></i> Par Trançado</h3>
-                            <p>Ethernet industrial · baixo custo</p>
-                            <button class="btn-saiba" data-target="det1">Saiba mais</button>
+                            <h3><i class="fas fa-ethernet"></i> <span data-key="parTitulo">Par Trançado</span></h3>
+                            <button class="btn-saiba" data-target="det1" data-key="verDetalhes">Ver detalhes</button>
                             <div id="det1" class="card-detail">
                                 <ul>
-                                    <li><i class="fas fa-microchip"></i> CLPs</li>
-                                    <li><i class="fas fa-desktop"></i> IHMs</li>
-                                    <li><i class="fas fa-server"></i> Switches</li>
-                                    <li><i class="fas fa-laptop"></i> Computadores</li>
+                                    <li><i class="fas fa-microchip"></i> <span data-key="parClps">CLPs</span></li>
+                                    <li><i class="fas fa-desktop"></i> <span data-key="parIhms">IHMs</span></li>
+                                    <li><i class="fas fa-server"></i> <span data-key="parSwitches">Switches Industriais</span></li>
+                                    <li><i class="fas fa-laptop"></i> <span data-key="parComputadores">Computadores industriais</span></li>
                                 </ul>
-                                <p>O cabo de par trançado é amplamente utilizado para conectar equipamentos industriais em redes Ethernet devido ao seu baixo custo, facilidade de instalação e boa velocidade.</p>
+                                <p data-key="parTexto">O par trançado é utilizado para comunicação Ethernet dentro das fábricas, conectando equipamentos de controle e supervisão.</p>
                             </div>
                         </div>
                     </div>
                     <!-- Card 2: Fibra Óptica -->
-                    <div class="card-item reveal">
+                    <div class="card-item">
                         <img src="https://images.unsplash.com/photo-1616400619175-5beda3a17896?w=400&h=200&fit=crop" alt="Fibra óptica">
                         <div class="card-body">
-                            <h3><i class="fas fa-fiber-optic"></i> Fibra Óptica</h3>
-                            <p>Alta velocidade · imunidade a ruído</p>
-                            <button class="btn-saiba" data-target="det2">Saiba mais</button>
+                            <h3><i class="fas fa-fiber-optic"></i> <span data-key="fibraTitulo">Fibra Óptica</span></h3>
+                            <button class="btn-saiba" data-target="det2" data-key="verDetalhes">Ver detalhes</button>
                             <div id="det2" class="card-detail">
                                 <ul>
-                                    <li><i class="fas fa-arrows-alt-h"></i> Longas distâncias</li>
-                                    <li><i class="fas fa-building"></i> Entre galpões</li>
-                                    <li><i class="fas fa-bolt"></i> Ambientes ruidosos</li>
+                                    <li><i class="fas fa-arrows-alt-h"></i> <span data-key="fibraDistancia">Grandes distâncias</span></li>
+                                    <li><i class="fas fa-building"></i> <span data-key="fibraSetores">Ligação entre setores</span></li>
+                                    <li><i class="fas fa-bolt"></i> <span data-key="fibraInterferencia">Ambientes com interferência elétrica</span></li>
                                 </ul>
-                                <p>A fibra óptica transmite dados através da luz, oferecendo alta velocidade e imunidade às interferências eletromagnéticas.</p>
+                                <p data-key="fibraTexto">A fibra óptica transmite dados por luz, oferecendo alta velocidade e proteção contra interferências.</p>
                             </div>
                         </div>
                     </div>
                     <!-- Card 3: Wireless -->
-                    <div class="card-item reveal">
+                    <div class="card-item">
                         <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=200&fit=crop" alt="Wireless industrial">
                         <div class="card-body">
-                            <h3><i class="fas fa-wifi"></i> Wireless</h3>
-                            <p>Mobilidade · fácil instalação</p>
-                            <button class="btn-saiba" data-target="det3">Saiba mais</button>
+                            <h3><i class="fas fa-wifi"></i> <span data-key="wirelessTitulo">Wireless</span></h3>
+                            <button class="btn-saiba" data-target="det3" data-key="verDetalhes">Ver detalhes</button>
                             <div id="det3" class="card-detail">
                                 <ul>
-                                    <li><i class="fas fa-tablet-alt"></i> Tablets industriais</li>
-                                    <li><i class="fas fa-robot"></i> AGVs</li>
-                                    <li><i class="fas fa-microchip"></i> Sensores IoT</li>
-                                    <li><i class="fas fa-database"></i> Coletores de dados</li>
+                                    <li><i class="fas fa-microchip"></i> <span data-key="wirelessSensores">Sensores</span></li>
+                                    <li><i class="fas fa-robot"></i> <span data-key="wirelessAgvs">AGVs</span></li>
+                                    <li><i class="fas fa-tablet-alt"></i> <span data-key="wirelessTablets">Tablets industriais</span></li>
+                                    <li><i class="fas fa-mobile-alt"></i> <span data-key="wirelessMoveis">Equipamentos móveis</span></li>
                                 </ul>
-                                <p>A tecnologia Wireless permite comunicação sem cabos, oferecendo mobilidade e flexibilidade dentro da fábrica.</p>
+                                <p data-key="wirelessTexto">O Wireless permite comunicação sem cabos, oferecendo mobilidade na indústria.</p>
                             </div>
                         </div>
                     </div>
@@ -145,11 +109,11 @@
         <!-- ===== TOPOLOGIAS ===== -->
         <section id="topologias" class="section" style="background: #f0f6fe;">
             <div class="container">
-                <h2><i class="fas fa-sitemap" style="color: var(--laranja);"></i> Topologias de Rede</h2>
-                <p class="section-desc">Conheça os principais layouts utilizados em redes industriais.</p>
+                <h2 data-key="topoTitulo"><i class="fas fa-sitemap" style="color: var(--laranja);"></i> Topologias de Rede</h2>
+                <p class="section-desc" data-key="topoDesc">Conheça os principais layouts utilizados em redes industriais.</p>
                 <div class="topo-buttons">
-                    <button class="topo-btn" data-topo="estrela"><i class="fas fa-star"></i> Estrela</button>
-                    <button class="topo-btn" data-topo="barramento"><i class="fas fa-bars"></i> Barramento</button>
+                    <button class="topo-btn" data-topo="estrela"><i class="fas fa-star"></i> <span data-key="estrela">Estrela</span></button>
+                    <button class="topo-btn" data-topo="barramento"><i class="fas fa-bars"></i> <span data-key="barramento">Barramento</span></button>
                 </div>
                 <div id="topo-estrela" class="topo-detail">
                     <div class="topo-grid">
@@ -157,17 +121,16 @@
                             <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop" alt="Topologia estrela">
                         </div>
                         <div class="topo-info">
-                            <h4><i class="fas fa-star" style="color: var(--laranja);"></i> Estrela</h4>
-                            <p>Todos os equipamentos são ligados a um switch central.</p>
+                            <h4><i class="fas fa-star" style="color: var(--laranja);"></i> <span data-key="estrela">Estrela</span></h4>
+                            <p data-key="estrelaExplicacao">Todos os equipamentos são conectados a um equipamento central chamado switch.</p>
                             <div class="vantagens">
-                                <span><i class="fas fa-check-circle"></i> Fácil manutenção</span>
-                                <span><i class="fas fa-check-circle"></i> Fácil localizar falhas</span>
-                                <span><i class="fas fa-check-circle"></i> Fácil expansão</span>
-                                <span><i class="fas fa-check-circle"></i> Alta confiabilidade</span>
+                                <span><i class="fas fa-check-circle"></i> <span data-key="estrelaV1">Fácil manutenção</span></span>
+                                <span><i class="fas fa-check-circle"></i> <span data-key="estrelaV2">Fácil expansão</span></span>
+                                <span><i class="fas fa-check-circle"></i> <span data-key="estrelaV3">Fácil identificar falhas</span></span>
                             </div>
                             <div class="desvantagens">
-                                <span><i class="fas fa-exclamation-triangle"></i> Depende do switch central</span>
-                                <span><i class="fas fa-exclamation-triangle"></i> Maior quantidade de cabos</span>
+                                <span><i class="fas fa-exclamation-triangle"></i> <span data-key="estrelaD1">Depende do equipamento central</span></span>
+                                <span><i class="fas fa-exclamation-triangle"></i> <span data-key="estrelaD2">Usa mais cabos</span></span>
                             </div>
                         </div>
                     </div>
@@ -178,17 +141,15 @@
                             <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop" alt="Topologia barramento">
                         </div>
                         <div class="topo-info">
-                            <h4><i class="fas fa-bars" style="color: var(--laranja);"></i> Barramento</h4>
-                            <p>Todos os dispositivos compartilham um único cabo principal.</p>
+                            <h4><i class="fas fa-bars" style="color: var(--laranja);"></i> <span data-key="barramento">Barramento</span></h4>
+                            <p data-key="barramentoExplicacao">Todos os equipamentos utilizam o mesmo cabo principal.</p>
                             <div class="vantagens">
-                                <span><i class="fas fa-check-circle"></i> Baixo custo</span>
-                                <span><i class="fas fa-check-circle"></i> Instalação simples</span>
-                                <span><i class="fas fa-check-circle"></i> Pouco cabeamento</span>
+                                <span><i class="fas fa-check-circle"></i> <span data-key="barramentoV1">Baixo custo</span></span>
+                                <span><i class="fas fa-check-circle"></i> <span data-key="barramentoV2">Poucos cabos</span></span>
                             </div>
                             <div class="desvantagens">
-                                <span><i class="fas fa-exclamation-triangle"></i> Difícil localizar falhas</span>
-                                <span><i class="fas fa-exclamation-triangle"></i> Falha no cabo interrompe tudo</span>
-                                <span><i class="fas fa-exclamation-triangle"></i> Pouco utilizado atualmente</span>
+                                <span><i class="fas fa-exclamation-triangle"></i> <span data-key="barramentoD1">Falhas afetam toda a rede</span></span>
+                                <span><i class="fas fa-exclamation-triangle"></i> <span data-key="barramentoD2">Difícil manutenção</span></span>
                             </div>
                         </div>
                     </div>
@@ -196,76 +157,40 @@
             </div>
         </section>
 
-        <!-- ===== QUIZ ===== -->
-        <section id="quiz" class="section">
+        <!-- ===== JOGO ===== -->
+        <section id="jogo" class="section">
             <div class="container">
-                <h2><i class="fas fa-brain" style="color: var(--laranja);"></i> Desafio das Redes Industriais</h2>
-                <p class="section-desc">Teste seus conhecimentos com 15 perguntas sobre redes industriais.</p>
+                <h2 data-key="jogoTitulo"><i class="fas fa-gamepad" style="color: var(--laranja);"></i> Desafio das Redes Industriais</h2>
+                <p class="section-desc" data-key="jogoDesc">Teste seus conhecimentos com 10 perguntas sobre redes industriais.</p>
                 <div class="quiz-container" id="quizContainer">
                     <div class="quiz-header">
-                        <span id="perguntaNum">0/15</span>
+                        <span id="perguntaNum" data-key="perguntaNum">0/10</span>
                         <span id="pontuacao">⭐ 0</span>
-                        <span id="timer">⏱️ 20s</span>
                     </div>
                     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div id="perguntaTexto" class="pergunta-texto">Clique em "Iniciar Quiz"</div>
+                    <div id="perguntaTexto" class="pergunta-texto" data-key="iniciarQuiz">Clique em "Iniciar Quiz"</div>
                     <div class="quiz-opcoes" id="opcoesContainer"></div>
                     <div id="explicacao" class="explicacao"></div>
                     <div class="quiz-actions">
-                        <button class="btn-jogar" id="btnIniciarQuiz"><i class="fas fa-play"></i> Iniciar Quiz</button>
-                        <button class="btn-jogar" id="btnProximo" style="display:none;">Próxima ➜</button>
-                        <button class="btn-jogar" id="btnReiniciarQuiz" style="display:none;"><i class="fas fa-redo"></i> Jogar Novamente</button>
+                        <button class="btn-jogar" id="btnIniciarQuiz" data-key="iniciarQuiz"><i class="fas fa-play"></i> Iniciar Quiz</button>
+                        <button class="btn-jogar" id="btnProximo" style="display:none;" data-key="proxima">Próxima ➜</button>
+                        <button class="btn-jogar" id="btnReiniciarQuiz" style="display:none;" data-key="jogarNovamente"><i class="fas fa-redo"></i> Jogar novamente</button>
                     </div>
                     <div id="resultadoFinal" class="resultado-final"></div>
-                </div>
-
-                <!-- MINI GAME: ARRASTE E SOLTE -->
-                <div class="mini-game">
-                    <h3><i class="fas fa-arrows-alt" style="color: var(--laranja);"></i> Mini Game: Arraste e Solte</h3>
-                    <p>Arraste o nome do cabo até sua aplicação correta.</p>
-                    <div class="drag-area" id="dragArea">
-                        <div class="drag-item" draggable="true" data-nome="par">Par Trançado</div>
-                        <div class="drag-item" draggable="true" data-nome="fibra">Fibra Óptica</div>
-                        <div class="drag-item" draggable="true" data-nome="wireless">Wireless</div>
-                    </div>
-                    <div class="drop-zones">
-                        <div class="drop-zone" data-alvo="par"><span>Liga CLPs e Switches</span></div>
-                        <div class="drop-zone" data-alvo="fibra"><span>Longas distâncias</span></div>
-                        <div class="drop-zone" data-alvo="wireless"><span>Equipamentos móveis</span></div>
-                    </div>
-                    <div id="dragScore" class="drag-score">Pontos: 0</div>
-                    <button class="btn-jogar" id="reiniciarDrag"><i class="fas fa-redo"></i> Reiniciar</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== CURIOSIDADES ===== -->
-        <section id="curiosidades" class="section" style="background: #f0f6fe;">
-            <div class="container">
-                <h2><i class="fas fa-lightbulb" style="color: var(--laranja);"></i> Curiosidades</h2>
-                <p class="section-desc">Fatos interessantes sobre redes e automação industrial.</p>
-                <div class="curiosidades-grid">
-                    <div class="curiosidade-card reveal"><i class="fas fa-clock" style="color: var(--laranja);"></i> <strong>Ethernet Industrial</strong> — Surgiu nos anos 80 e hoje é padrão em fábricas.</div>
-                    <div class="curiosidade-card reveal"><i class="fas fa-clock" style="color: var(--laranja);"></i> <strong>Profinet</strong> — Desenvolvido pela Siemens, é amplamente usado na Europa.</div>
-                    <div class="curiosidade-card reveal"><i class="fas fa-clock" style="color: var(--laranja);"></i> <strong>Modbus</strong> — Protocolo serial criado em 1979, ainda muito ativo.</div>
-                    <div class="curiosidade-card reveal"><i class="fas fa-clock" style="color: var(--laranja);"></i> <strong>EtherNet/IP</strong> — Utiliza o protocolo CIP, comum nos EUA.</div>
-                    <div class="curiosidade-card reveal"><i class="fas fa-clock" style="color: var(--laranja);"></i> <strong>Wi-Fi Industrial</strong> — Opera em 2.4GHz e 5GHz com robustez.</div>
-                    <div class="curiosidade-card reveal"><i class="fas fa-clock" style="color: var(--laranja);"></i> <strong>IoT Industrial</strong> — Conecta sensores e atuadores à nuvem.</div>
                 </div>
             </div>
         </section>
 
         <!-- ===== SOBRE ===== -->
-        <section id="sobre" class="section">
+        <section id="sobre" class="section" style="background: #f0f6fe;">
             <div class="container">
-                <h2><i class="fas fa-robot" style="color: var(--laranja);"></i> Sobre o Projeto</h2>
+                <h2 data-key="sobreTitulo"><i class="fas fa-info-circle" style="color: var(--laranja);"></i> Sobre</h2>
                 <div class="sobre-grid">
-                    <div class="sobre-texto reveal">
-                        <p>O <strong>Guia Visual de Redes Industriais</strong> é um material educativo criado para auxiliar estudantes e profissionais da automação industrial a compreenderem os principais meios de comunicação e topologias utilizados no chão de fábrica.</p>
-                        <p>O projeto foi desenvolvido com <strong>HTML5, CSS3 e JavaScript puro</strong>, sem dependências externas, e está pronto para ser hospedado no GitHub Pages.</p>
-                        <p><i class="fas fa-graduation-cap"></i> Material livre para uso acadêmico e consulta.</p>
+                    <div class="sobre-texto">
+                        <p data-key="sobreTexto">Este projeto apresenta conceitos básicos de redes industriais utilizadas na automação. Desenvolvido com HTML5, CSS3 e JavaScript puro.</p>
+                        <p data-key="sobreTexto2">Ideal para estudantes e profissionais que desejam entender como os dispositivos se comunicam no chão de fábrica.</p>
                     </div>
-                    <div class="sobre-img reveal">
+                    <div class="sobre-img">
                         <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=250&fit=crop" alt="Fábrica moderna">
                     </div>
                 </div>
@@ -276,14 +201,14 @@
     <!-- ===== RODAPÉ ===== -->
     <footer>
         <div class="container">
-            <p><i class="fas fa-network-wired"></i> Guia Visual de Redes Industriais</p>
+            <p><i class="fas fa-network-wired"></i> <span data-key="rodapeTitulo">Guia Visual de Redes Industriais</span></p>
             <div class="footer-icons">
                 <i class="fab fa-html5"></i>
                 <i class="fab fa-css3-alt"></i>
                 <i class="fab fa-js"></i>
                 <i class="fab fa-github"></i>
             </div>
-            <p style="font-size:0.85rem; opacity:0.7;">Desenvolvido para fins educacionais · 2026</p>
+            <p style="font-size:0.85rem; opacity:0.7;" data-key="rodapeCompativel">Compatível com GitHub Pages</p>
             <p style="font-size:0.75rem; opacity:0.5;">Imagens: Unsplash</p>
         </div>
     </footer>
