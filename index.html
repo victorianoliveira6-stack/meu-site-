@@ -360,23 +360,23 @@
             <h1 id="main-title">Guia Visual de Redes para Automação</h1>
         </div>
         <div class="lang-selector">
-            <button onclick="setLanguage('pt')" id="lang-pt" class="lang-btn active">PT</button>
-            <button onclick="setLanguage('en')" id="lang-en" class="lang-btn">EN</button>
-            <button onclick="setLanguage('es')" id="lang-es" class="lang-btn">ES</button>
+            <button id="lang-pt" class="lang-btn active">PT</button>
+            <button id="lang-en" class="lang-btn">EN</button>
+            <button id="lang-es" class="lang-btn">ES</button>
         </div>
     </header>
 
     <nav>
-        <button onclick="switchTab('cabos')" id="btn-tab-cabos" class="tab-btn active">Cabos Industriais</button>
-        <button onclick="switchTab('topologias')" id="btn-tab-topologias" class="tab-btn">Topologias</button>
-        <button onclick="switchTab('jogo')" id="btn-tab-jogo" class="tab-btn">Mini Jogo</button>
+        <button id="btn-tab-cabos" class="tab-btn active">Cabos Industriais</button>
+        <button id="btn-tab-topologias" class="tab-btn">Topologias</button>
+        <button id="btn-tab-jogo" class="tab-btn">Mini Jogo</button>
     </nav>
 
     <main>
         
         <section id="tab-cabos" class="tab-content active">
             <div class="cards-grid">
-                <div class="card" onclick="showCable('par')">
+                <div class="card" data-cable="par">
                     <div class="card-img-container">
                         <svg width="120" height="120" viewBox="0 0 100 100">
                             <rect x="10" y="40" width="80" height="20" rx="5" fill="#0d1527" stroke="#0066ff" stroke-width="2"/>
@@ -389,7 +389,7 @@
                         <p id="c1-d">Clique para ver onde e como este elemento de cobre blindado atua na infraestrutura industrial.</p>
                     </div>
                 </div>
-                <div class="card" onclick="showCable('fibra')">
+                <div class="card" data-cable="fibra">
                     <div class="card-img-container">
                         <svg width="120" height="120" viewBox="0 0 100 100">
                             <circle cx="50" cy="50" r="30" fill="none" stroke="#0066ff" stroke-width="2" stroke-dasharray="4 4"/>
@@ -402,7 +402,7 @@
                         <p id="c2-d">Clique para entender o poder da imunidade eletromagnética total por feixes de luz.</p>
                     </div>
                 </div>
-                <div class="card" onclick="showCable('wireless')">
+                <div class="card" data-cable="wireless">
                     <div class="card-img-container">
                         <svg width="120" height="120" viewBox="0 0 100 100">
                             <circle cx="50" cy="70" r="6" fill="#3385ff"/>
@@ -420,4 +420,43 @@
             <div id="cable-panel" class="expand-panel">
                 <h2 id="panel-title">Título do Cabo</h2>
                 <div class="info-block">
-                    <h4 id="lbl-uso">ON
+                    <h4 id="lbl-uso">ONDE É USADO NA FÁBRICA?</h4>
+                    <p id="panel-use">Explicação simples do uso.</p>
+                </div>
+                <div class="info-block">
+                    <h4 id="lbl-detalhes">DETALHES TÉCNICOS ADICIONAIS</h4>
+                    <p id="panel-tech">Informações adicionais ricas em detalhes.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-topologias" class="tab-content">
+            <div class="topology-controls">
+                <button id="btn-e" class="btn-topo">Layout em Estrela</button>
+                <button id="btn-b" class="btn-topo">Layout em Barramento</button>
+            </div>
+
+            <div id="topo-panel" class="topo-panel">
+                <h2 id="topo-title">Nome do Layout</h2>
+                <p id="topo-desc" style="margin-top: 10px; color: var(--texto-escuro); line-height: 1.6;"></p>
+                
+                <div style="text-align: center; margin: 30px 0;" id="topo-svg-container"></div>
+
+                <div class="topo-grid">
+                    <div class="list-box vantagens">
+                        <h4 id="lbl-v">Vantagens</h4>
+                        <ul id="topo-v-list"></ul>
+                    </div>
+                    <div class="list-box desvantagens">
+                        <h4 id="lbl-d">Desvantagens</h4>
+                        <ul id="topo-d-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-jogo" class="tab-content">
+            <div class="game-card">
+                <div class="score-board"><span id="lbl-score">Pontos</span>: <span id="game-score">0</span></div>
+                <h2 id="lbl-g-title">Desafio de Redes Industriais</h2>
+                <p id="game-question
