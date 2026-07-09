@@ -444,11 +444,11 @@
 
                 <div class="topo-grid">
                     <div class="list-box vantagens">
-                        <h4 id="lbl-v">Vantagens</h4>
+                        <h4 id="lbl-v">Vantagens no Chão de Fábrica</h4>
                         <ul id="topo-v-list"></ul>
                     </div>
                     <div class="list-box desvantagens">
-                        <h4 id="lbl-d">Desvantagens</h4>
+                        <h4 id="lbl-d">Desvantagens no Chão de Fábrica</h4>
                         <ul id="topo-d-list"></ul>
                     </div>
                 </div>
@@ -459,4 +459,51 @@
             <div class="game-card">
                 <div class="score-board"><span id="lbl-score">Pontos</span>: <span id="game-score">0</span></div>
                 <h2 id="lbl-g-title">Desafio de Redes Industriais</h2>
-                <p id="game-question
+                <p id="game-question" class="game-q">Qual meio físico é imune a ruídos de solda e isola eletricamente os painéis?</p>
+                <div class="game-options" id="game-options">
+                    </div>
+                <div class="feedback" id="game-feedback"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Guia Visual de Redes para Automação. Industrial Cyber Theme.</p>
+    </footer>
+
+    <script>
+        // Objeto de Idiomas estruturado de forma estática
+        const langData = {
+            pt: {
+                title: "Guia Visual de Redes para Automação", tabCabos: "Cabos Industriais", tabTopologias: "Topologias", tabJogo: "Mini Jogo",
+                c1t: "Par Trançado", c1d: "Clique para ver onde e como este elemento de cobre blindado atua na infraestrutura industrial.",
+                c2t: "Fibra Óptica", c2d: "Clique para entender o poder da imunidade eletromagnética total por feixes de luz.",
+                c3t: "Wireless", c3d: "Clique para analisar as aplicações de rádio frequência sem fio no chão de fábrica.",
+                lblUso: "ONDE É USADO NA FÁBRICA?", lblDetalhes: "DETALHES TÉCNICOS ADICIONAIS", lblV: "Vantagens no Chão de Fábrica", lblD: "Desvantagens no Chão de Fábrica",
+                lblScore: "Pontos", lblGTitle: "Desafio de Redes Industriais", btnE: "Layout em Estrela", btnB: "Layout em Barramento",
+                parUso: "Usado para conectar os Controladores Lógicos Programáveis (CLPs) aos painéis de operação (IHMs) e switches de distribuição dentro das salas de controle.",
+                parTech: "O modelo STP possui malha metálica protetora contra ruídos elétricos gerados por motores pesados. Limite de 100 metros por segmento.",
+                fibraUso: "Usada na interligação de redes entre galpões distantes ou ambientes com altíssima interferência, como áreas de solda robótica.",
+                fibraTech: "Transmite dados por feixes de luz. Isolamento elétrico total, imune a surtos de tensão ou raios entre edifícios.",
+                wireUso: "Aplicado no monitoramento de sensores de difícil acesso, tanques externos e pontes rolantes.",
+                wireTech: "Utiliza WirelessHART ou Wi-Fi Industrial com criptografia pesada e salto de frequência para contornar barreiras metálicas.",
+                estTitle: "Layout em Estrela (Star Topology)", estDesc: "A arquitetura padrão das redes Ethernet modernas. Cada dispositivo vai direto para um Switch central.",
+                barTitle: "Layout em Barramento (Bus Topology)", barDesc: "A topologia tradicional usada em redes clássicas (Profibus). Todos compartilham o mesmo cabo linear.",
+                estV: ["Se um cabo falhar, apenas uma máquina para.", "Fácil de localizar cabos rompidos.", "Sem colisões de dados."],
+                estD: ["Se o switch quebrar, toda a rede cai.", "Consome mais metros de cabo."],
+                barV: ["Economia drástica de cabos.", "Arquitetura simples de passar por calhas."],
+                barD: ["Se o cabo principal partir, o restante cai.", "Difícil localizar conexões com mau contato."],
+                q1: "Qual meio físico é imune a ruídos de solda e isola eletricamente os painéis?",
+                q2: "Se o cabo principal se romper e desligar metade da fábrica, qual topologia estava em uso?",
+                correct: "Resposta correta! Excelente escolha técnica. +10 Pontos.",
+                wrong: "Resposta incorreta. Esse meio falharia nessas condições de fábrica. Tente novamente!"
+            },
+            en: {
+                title: "Visual Network Guide for Automation", tabCabos: "Industrial Cables", tabTopologias: "Topologies", tabJogo: "Mini Game",
+                c1t: "Twisted Pair", c1d: "Click to see where and how this shielded copper element acts in the industrial infrastructure.",
+                c2t: "Fiber Optic", c2d: "Click to understand the power of total electromagnetic immunity through light beams.",
+                c3t: "Wireless", c3d: "Click to analyze wireless radio frequency applications on the factory floor.",
+                lblUso: "WHERE IS IT USED IN THE FACTORY?", lblDetalhes: "ADDITIONAL TECHNICAL DETAILS", lblV: "Advantages on the Factory Floor", lblD: "Disadvantages on the Factory Floor",
+                lblScore: "Score", lblGTitle: "Industrial Network Challenge", btnE: "Star Layout", btnB: "Bus
+            
