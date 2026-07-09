@@ -1,727 +1,804 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia Visual de Redes para Automação</title>
-    <style>
-        /* CONFIGURAÇÃO DE CORES: AMBIENTE INDUSTRIAL PRETO E AZUL */
-        :root {
-            --bg-principal: #050914;
-            --bg-card: #0c162b;
-            --bg-nav: #081020;
-            --azul-eletrico: #0066ff;
-            --azul-brilhante: #3385ff;
-            --azul-escuro: #0a1d37;
-            --texto-claro: #f0f4fc;
-            --texto-escuro: #8fa5c7;
-            --verde-sucesso: #00cc66;
-            --vermelho-erro: #ff3333;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia Visual de Redes para Automação</title>
+  <!-- Fontes e ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0b0e1a;
+      color: #e8edf5;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+    }
 
-        body {
-            background-color: var(--bg-principal);
-            color: var(--texto-claro);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    .container {
+      max-width: 1280px;
+      width: 100%;
+      background: #111827;
+      background-image: radial-gradient(circle at 20% 30%, #1a2a4a 0%, #0b0e1a 80%);
+      border-radius: 2.5rem;
+      padding: 2rem 2rem 2.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(30, 100, 200, 0.15);
+      border: 1px solid #1e3a5f;
+      transition: all 0.2s;
+    }
 
-        /* NAVBAR & IDIOMAS */
-        header {
-            background-color: var(--bg-nav);
-            border-bottom: 2px solid var(--azul-escuro);
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
+    /* cabeçalho */
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #1e3a5f;
+      padding-bottom: 1.2rem;
+    }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+    .header h1 {
+      font-weight: 700;
+      font-size: 1.9rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #b3d9ff, #4d9eff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
 
-        .logo-container h1 {
-            font-size: 24px;
-            font-weight: 800;
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
-        }
+    .header h1 i {
+      color: #4d9eff;
+      font-size: 2.2rem;
+      background: #0f1f33;
+      padding: 0.3rem 0.6rem;
+      border-radius: 40px;
+      box-shadow: 0 0 10px #1f4b7a;
+    }
 
-        .lang-selector {
-            display: flex;
-            background: var(--bg-principal);
-            border: 1px solid var(--azul-escuro);
-            padding: 4px;
-            border-radius: 8px;
-        }
+    .idiomas {
+      display: flex;
+      gap: 0.5rem;
+      background: #0f1f33;
+      padding: 0.3rem 0.8rem;
+      border-radius: 40px;
+      border: 1px solid #1e4a7a;
+    }
 
-        .lang-btn {
-            background: transparent;
-            border: none;
-            color: var(--texto-escuro);
-            padding: 8px 16px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
+    .idioma-btn {
+      background: transparent;
+      border: none;
+      color: #9bb9e0;
+      font-weight: 600;
+      padding: 0.4rem 0.9rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
 
-        .lang-btn.active {
-            background-color: var(--azul-eletrico);
-            color: white;
-            box-shadow: 0 0 10px rgba(0, 102, 255, 0.4);
-        }
+    .idioma-btn i {
+      font-size: 0.9rem;
+    }
 
-        /* NAVEGAÇÃO DE ABAS */
-        nav {
-            background-color: var(--bg-nav);
-            display: flex;
-            justify-content: center;
-            border-bottom: 1px solid var(--azul-escuro);
-        }
+    .idioma-btn.ativo {
+      background: #1a3f6a;
+      color: white;
+      box-shadow: 0 0 8px #2f7bcb;
+    }
 
-        .tab-btn {
-            background: transparent;
-            border: none;
-            color: var(--texto-escuro);
-            padding: 16px 32px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-        }
+    .idioma-btn:hover {
+      background: #1e3f66;
+      color: white;
+    }
 
-        .tab-btn:hover {
-            color: var(--azul-brilhante);
-        }
+    /* abas */
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #1e3a5f;
+      padding-bottom: 0.6rem;
+    }
 
-        .tab-btn.active {
-            color: var(--azul-eletrico);
-            border-bottom-color: var(--azul-eletrico);
-            background: linear-gradient(to bottom, transparent, rgba(0, 102, 255, 0.05));
-        }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: #8ba9d4;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 0.6rem 1.8rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-        /* CONTEÚDO PRINCIPAL */
-        main {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 40px 20px;
-            flex-grow: 1;
-        }
+    .tab-btn i {
+      font-size: 1.2rem;
+    }
 
-        .tab-content {
-            display: none;
-        }
+    .tab-btn.ativo {
+      background: #1a3f6a;
+      color: white;
+      box-shadow: 0 0 12px #1f5a9e;
+    }
 
-        .tab-content.active {
-            display: block;
-        }
+    .tab-btn:hover {
+      background: #1c3552;
+      color: #d6e6ff;
+    }
 
-        /* CARDS DA ABA 1: CABOS */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
+    .painel {
+      display: none;
+      animation: fadeUp 0.3s ease;
+    }
 
-        .card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--azul-escuro);
-            border-radius: 14px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    .painel.ativo {
+      display: block;
+    }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--azul-eletrico);
-            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.15);
-        }
+    @keyframes fadeUp {
+      0% { opacity: 0.3; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
 
-        .card-img-container {
-            height: 180px;
-            background: linear-gradient(135deg, #091224, #050914);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid var(--azul-escuro);
-        }
+    /* cards cabos */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.8rem;
+      margin: 1.5rem 0 1rem;
+    }
 
-        .card-body {
-            padding: 25px;
-        }
+    .card-cabo {
+      background: #0f1d31;
+      border-radius: 28px;
+      padding: 1.8rem 1.2rem 1.2rem;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid #1d3d62;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      transition: 0.25s;
+      backdrop-filter: blur(2px);
+    }
 
-        .card-body h3 {
-            font-size: 20px;
-            color: #ffffff;
-            margin-bottom: 12px;
-        }
+    .card-cabo:hover {
+      transform: translateY(-8px);
+      border-color: #3d8eff;
+      box-shadow: 0 12px 28px #0d284a;
+    }
 
-        .card-body p {
-            color: var(--texto-escuro);
-            font-size: 14px;
-            line-height: 1.5;
-        }
+    .card-cabo i {
+      font-size: 3.2rem;
+      color: #4d9eff;
+      background: #0f1f33;
+      padding: 0.8rem;
+      border-radius: 60px;
+      margin-bottom: 0.7rem;
+      box-shadow: 0 0 0 1px #1e4a7a;
+    }
 
-        /* PAINÉIS DE INFORMAÇÕES EXTRAS */
-        .expand-panel {
-            background-color: var(--bg-card);
-            border: 2px solid var(--azul-eletrico);
-            border-radius: 14px;
-            padding: 30px;
-            margin-top: 30px;
-            display: none;
-        }
+    .card-cabo h3 {
+      font-weight: 600;
+      font-size: 1.3rem;
+      margin-bottom: 0.3rem;
+      color: #c7deff;
+    }
 
-        .expand-panel h2 {
-            font-size: 24px;
-            color: #ffffff;
-            margin-bottom: 15px;
-        }
+    .card-cabo p {
+      font-size: 0.9rem;
+      color: #a0bfe5;
+      padding: 0.2rem 0;
+    }
 
-        .info-block {
-            margin-top: 20px;
-            background-color: rgba(5, 9, 20, 0.6);
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid var(--azul-eletrico);
-        }
+    .explicacao-cabo {
+      background: #0b182b;
+      border-left: 5px solid #3d8eff;
+      border-radius: 18px;
+      padding: 1.2rem 1.8rem;
+      margin: 1.8rem 0 0.5rem;
+      font-size: 1rem;
+      box-shadow: 0 0 15px #0a1a30;
+    }
 
-        .info-block h4 {
-            color: var(--azul-brilhante);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 1px;
-        }
+    .explicacao-cabo i {
+      color: #4d9eff;
+      margin-right: 10px;
+    }
 
-        /* CONTROLES DA ABA 2: TOPOLOGIAS */
-        .topology-controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
+    .hidden {
+      display: none;
+    }
 
-        .btn-topo {
-            background-color: var(--bg-card);
-            border: 1px solid var(--azul-escuro);
-            color: #ffffff;
-            padding: 18px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    /* topologias */
+    .topo-botoes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin: 1.2rem 0 1rem;
+    }
 
-        .btn-topo:hover {
-            border-color: var(--azul-eletrico);
-            background-color: var(--azul-escuro);
-        }
+    .topo-btn {
+      background: #0f1d31;
+      border: 1px solid #1f4a7a;
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      color: #b3d0f5;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .btn-topo.active {
-            background-color: var(--azul-eletrico);
-            border-color: var(--azul-brilhante);
-            box-shadow: 0 0 15px rgba(0, 102, 255, 0.3);
-        }
+    .topo-btn i {
+      color: #4d9eff;
+    }
 
-        .topo-panel {
-            background-color: var(--bg-card);
-            border: 1px solid var(--azul-escuro);
-            border-radius: 16px;
-            padding: 35px;
-            display: none;
-        }
+    .topo-btn.ativo {
+      background: #1a3f6a;
+      border-color: #3d8eff;
+      color: white;
+      box-shadow: 0 0 16px #1f5a9e;
+    }
 
-        .topo-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 25px;
-        }
+    .topo-btn:hover {
+      background: #1c3552;
+    }
 
-        @media (max-width: 768px) {
-            .topo-grid { grid-template-columns: 1fr; }
-        }
+    .topo-conteudo {
+      background: #0b182b;
+      border-radius: 24px;
+      padding: 1.8rem 2rem;
+      margin-top: 1.2rem;
+      border: 1px solid #1d3d62;
+    }
 
-        .list-box {
-            padding: 20px;
-            border-radius: 10px;
-        }
+    .topo-conteudo h4 {
+      font-size: 1.5rem;
+      color: #b3d9ff;
+      margin-bottom: 0.8rem;
+    }
 
-        .list-box.vantagens { background-color: rgba(0, 204, 102, 0.05); border: 1px solid rgba(0, 204, 102, 0.2); }
-        .list-box.desvantagens { background-color: rgba(255, 51, 51, 0.05); border: 1px solid rgba(255, 51, 51, 0.2); }
+    .topo-conteudo p {
+      margin: 0.8rem 0;
+      line-height: 1.5;
+    }
 
-        .list-box h4 { margin-bottom: 15px; font-size: 18px; }
-        .list-box.vantagens h4 { color: var(--verde-sucesso); }
-        .list-box.desvantagens h4 { color: var(--vermelho-erro); }
+    .lista-vantagens {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
 
-        .list-box ul { list-style-position: inside; padding-left: 5px; }
-        .list-box li { margin-bottom: 10px; font-size: 14px; color: var(--texto-claro); line-height: 1.4; }
+    .lista-vantagens ul {
+      list-style: none;
+      flex: 1 1 180px;
+    }
 
-        /* MINI JOGO DE PERGUNTAS STATIC (SEM RISCO DE TRAVAMENTO) */
-        .game-card {
-            max-width: 650px;
-            margin: 0 auto;
-            background-color: var(--bg-card);
-            border: 1px solid var(--azul-escuro);
-            border-radius: 16px;
-            padding: 35px;
-            position: relative;
-        }
+    .lista-vantagens li {
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .score-board {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: var(--azul-escuro);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            border: 1px solid var(--azul-eletrico);
-        }
+    .lista-vantagens li i {
+      width: 1.4rem;
+      color: #4d9eff;
+    }
 
-        .game-q {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 30px 0 20px 0;
-            line-height: 1.5;
-        }
+    .badge {
+      background: #1a3f6a;
+      padding: 0.15rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #b3d9ff;
+    }
 
-        .game-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+    /* mini jogo */
+    .jogo-area {
+      margin-top: 2.8rem;
+      background: #0b182b;
+      border-radius: 28px;
+      padding: 1.8rem 2rem;
+      border: 1px solid #1d3d62;
+      box-shadow: inset 0 0 20px #050b14;
+    }
 
-        .opt-btn {
-            background-color: var(--bg-principal);
-            border: 1px solid var(--azul-escuro);
-            color: var(--texto-claro);
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: left;
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            width: 100%;
-        }
+    .jogo-area h3 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      color: #b3d9ff;
+      margin-bottom: 1rem;
+    }
 
-        .opt-btn:hover {
-            border-color: var(--azul-eletrico);
-            background-color: var(--azul-escuro);
-        }
+    .jogo-area h3 i {
+      color: #f5c542;
+    }
 
-        .feedback {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            text-align: center;
-            display: none;
-        }
+    .pergunta {
+      font-size: 1.2rem;
+      margin: 0.8rem 0 1.2rem;
+      font-weight: 500;
+    }
 
-        .lang-unit {
-            display: none;
-        }
+    .opcoes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
 
-        .lang-unit.visible {
-            display: block;
-        }
+    .opcao-btn {
+      background: #0f1d31;
+      border: 1px solid #1f4a7a;
+      color: #c7deff;
+      padding: 0.7rem 1.4rem;
+      border-radius: 40px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.15s;
+      font-size: 0.95rem;
+    }
 
-        /* FOOTER */
-        footer {
-            background-color: var(--bg-nav);
-            text-align: center;
-            padding: 20px;
-            font-size: 13px;
-            color: var(--texto-escuro);
-            border-top: 1px solid var(--azul-escuro);
-            margin-top: auto;
-        }
-    </style>
+    .opcao-btn:hover {
+      background: #1a3f6a;
+      border-color: #3d8eff;
+    }
+
+    .opcao-btn.certo {
+      background: #1a6a3a;
+      border-color: #3db87a;
+      color: white;
+    }
+
+    .opcao-btn.errado {
+      background: #6a1a2a;
+      border-color: #b83d5a;
+      color: white;
+    }
+
+    .feedback-jogo {
+      margin: 0.8rem 0 0.2rem;
+      font-weight: 500;
+      color: #b3d9ff;
+      background: #0f1f33;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      display: inline-block;
+    }
+
+    .reset-jogo {
+      background: #0f1d31;
+      border: 1px solid #2a5a8a;
+      color: #b3d9ff;
+      padding: 0.5rem 1.5rem;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-left: 1rem;
+      transition: 0.15s;
+    }
+
+    .reset-jogo:hover {
+      background: #1a3f6a;
+      color: white;
+    }
+
+    /* rodapé */
+    .footer {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: #4d6f96;
+      text-align: center;
+      border-top: 1px solid #1e3a5f;
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* responsivo */
+    @media (max-width: 700px) {
+      .container { padding: 1.2rem; }
+      .header h1 { font-size: 1.4rem; }
+      .tab-btn { padding: 0.4rem 1.2rem; font-size: 0.95rem; }
+    }
+  </style>
 </head>
 <body>
+<div class="container" id="app">
+  <!-- cabeçalho -->
+  <div class="header">
+    <h1><i class="fas fa-network-wired"></i> Guia Visual · Redes para Automação</h1>
+    <div class="idiomas">
+      <button class="idioma-btn ativo" data-idioma="pt"><i class="fas fa-language"></i> PT</button>
+      <button class="idioma-btn" data-idioma="en"><i class="fas fa-language"></i> EN</button>
+      <button class="idioma-btn" data-idioma="es"><i class="fas fa-language"></i> ES</button>
+    </div>
+  </div>
 
-    <header>
-        <div class="logo-container">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0066ff" stroke-width="2.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-            <h1 class="lang-unit pt visible">Guia Visual de Redes para Automação</h1>
-            <h1 class="lang-unit en">Visual Network Guide for Automation</h1>
-            <h1 class="lang-unit es">Guia Visual de Redes para Automatización</h1>
-        </div>
-        <div class="lang-selector">
-            <button id="lang-pt" class="lang-btn active" onclick="changeLang('pt')">PT</button>
-            <button id="lang-en" class="lang-btn" onclick="changeLang('en')">EN</button>
-            <button id="lang-es" class="lang-btn" onclick="changeLang('es')">ES</button>
-        </div>
-    </header>
+  <!-- abas -->
+  <div class="tabs">
+    <button class="tab-btn ativo" data-tab="cabos"><i class="fas fa-plug"></i> Cabos Industriais</button>
+    <button class="tab-btn" data-tab="topologias"><i class="fas fa-sitemap"></i> Topologias</button>
+  </div>
 
-    <nav>
-        <button id="tab-b1" class="tab-btn active" onclick="switchTab('cabos')">
-            <span class="lang-unit pt visible">Cabos Industriais</span>
-            <span class="lang-unit en">Industrial Cables</span>
-            <span class="lang-unit es">Cables Industriales</span>
-        </button>
-        <button id="tab-b2" class="tab-btn" onclick="switchTab('topologias')">
-            <span class="lang-unit pt visible">Topologias</span>
-            <span class="lang-unit en">Topologies</span>
-            <span class="lang-unit es">Topologías</span>
-        </button>
-        <button id="tab-b3" class="tab-btn" onclick="switchTab('jogo')">
-            <span class="lang-unit pt visible">Mini Jogo</span>
-            <span class="lang-unit en">Mini Game</span>
-            <span class="lang-unit es">Mini Juego</span>
-        </button>
-    </nav>
+  <!-- painel cabos -->
+  <div class="painel ativo" id="painel-cabos">
+    <div class="card-grid">
+      <div class="card-cabo" data-cabo="par">
+        <i class="fas fa-arrows-alt-h"></i>
+        <h3>Par Trançado</h3>
+        <p><i class="fas fa-microchip"></i> Industrial Ethernet</p>
+      </div>
+      <div class="card-cabo" data-cabo="fibra">
+        <i class="fas fa-fiber"></i>
+        <h3>Fibra Óptica</h3>
+        <p><i class="fas fa-bolt"></i> Longa distância</p>
+      </div>
+      <div class="card-cabo" data-cabo="wireless">
+        <i class="fas fa-wifi"></i>
+        <h3>Wireless</h3>
+        <p><i class="fas fa-robot"></i> Móveis / AGV</p>
+      </div>
+    </div>
 
-    <main>
-        
-        <section id="content-cabos" class="tab-content active">
-            <div class="cards-grid">
-                <div class="card" onclick="showCable('par')">
-                    <div class="card-img-container">
-                        <svg width="120" height="120" viewBox="0 0 100 100">
-                            <rect x="10" y="40" width="80" height="20" rx="5" fill="#0c162b" stroke="#0066ff" stroke-width="2"/>
-                            <path d="M15 50 Q 30 35, 45 50 T 75 50 T 85 50" fill="none" stroke="#3385ff" stroke-width="3"/>
-                            <path d="M15 50 Q 30 65, 45 50 T 75 50 T 85 50" fill="none" stroke="#0044cc" stroke-width="3"/>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3>Par Trançado / Twisted Pair</h3>
-                        <p class="lang-unit pt visible">Clique para ver onde e como este cabo de cobre blindado atua no chão de fábrica.</p>
-                        <p class="lang-unit en">Click to see where and how this shielded copper cable works on the factory floor.</p>
-                        <p class="lang-unit es">Haga clic para ver dónde y cómo funciona este cable de cobre blindado en la planta.</p>
-                    </div>
-                </div>
+    <!-- explicação dinâmica -->
+    <div id="explicacao-cabo" class="explicacao-cabo hidden">
+      <i class="fas fa-circle-info"></i> <span id="texto-explicacao">Selecione um cabo para ver detalhes.</span>
+    </div>
 
-                <div class="card" onclick="showCable('fibra')">
-                    <div class="card-img-container">
-                        <svg width="120" height="120" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="30" fill="none" stroke="#0066ff" stroke-width="2" stroke-dasharray="4 4"/>
-                            <path d="M20 50 C 40 20, 60 80, 80 50" fill="none" stroke="#3385ff" stroke-width="4"/>
-                            <circle cx="80" cy="50" r="5" fill="#ffffff"/>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3>Fibra Óptica / Fiber Optic</h3>
-                        <p class="lang-unit pt visible">Clique para entender o poder da imunidade eletromagnética total por feixes de luz.</p>
-                        <p class="lang-unit en">Click to understand the power of total electromagnetic immunity via light beams.</p>
-                        <p class="lang-unit es">Haga clic para comprender el poder de la inmunidad electromagnética total por haces de luz.</p>
-                    </div>
-                </div>
+    <!-- textos ocultos (pt/en/es) -->
+    <div id="dados-cabos" style="display:none;">
+      <div data-idioma="pt">
+        <div data-cabo="par"><strong>Par Trançado</strong> — usado em redes Ethernet industriais (PROFINET, EtherNet/IP). Conecta CLPs, sensores e drives em curtas distâncias (até 100m).</div>
+        <div data-cabo="fibra"><strong>Fibra Óptica</strong> — ideal para longas distâncias e ambientes com alta interferência eletromagnética. Liga subestações, plantas distantes e backbones.</div>
+        <div data-cabo="wireless"><strong>Wireless</strong> — usado em AGVs, robôs móveis e monitoramento de áreas de difícil acesso. Padrões como WiFi industrial e 5G.</div>
+      </div>
+      <div data-idioma="en">
+        <div data-cabo="par"><strong>Twisted Pair</strong> — used in industrial Ethernet (PROFINET, EtherNet/IP). Connects PLCs, sensors and drives over short distances (up to 100m).</div>
+        <div data-cabo="fibra"><strong>Fiber Optic</strong> — ideal for long distances and high EMI environments. Connects substations, remote plants and backbones.</div>
+        <div data-cabo="wireless"><strong>Wireless</strong> — used in AGVs, mobile robots and hard-to-reach areas. Industrial WiFi and 5G standards.</div>
+      </div>
+      <div data-idioma="es">
+        <div data-cabo="par"><strong>Par Trenzado</strong> — utilizado en Ethernet industrial (PROFINET, EtherNet/IP). Conecta PLCs, sensores y variadores en distancias cortas (hasta 100m).</div>
+        <div data-cabo="fibra"><strong>Fibra Óptica</strong> — ideal para largas distancias y entornos con alta interferencia. Enlaza subestaciones, plantas remotas y backbones.</div>
+        <div data-cabo="wireless"><strong>Wireless</strong> — usado en AGVs, robots móviles y monitoreo en áreas de difícil acceso. WiFi industrial y 5G.</div>
+      </div>
+    </div>
+  </div>
 
-                <div class="card" onclick="showCable('wireless')">
-                    <div class="card-img-container">
-                        <svg width="120" height="120" viewBox="0 0 100 100">
-                            <circle cx="50" cy="70" r="6" fill="#3385ff"/>
-                            <path d="M35 55 A 25 25 0 0 1 65 55" fill="none" stroke="#0066ff" stroke-width="3" stroke-linecap="round"/>
-                            <path d="M23 43 A 40 40 0 0 1 77 43" fill="none" stroke="#3385ff" stroke-width="3" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3>Wireless / Inalámbrico</h3>
-                        <p class="lang-unit pt visible">Clique para analisar as aplicações de rádio frequência sem fio em áreas industriais.</p>
-                        <p class="lang-unit en">Click to analyze industrial wireless radio frequency applications.</p>
-                        <p class="lang-unit es">Haga clic para analizar las aplicaciones de radiofrecuencia inalámbrica industrial.</p>
-                    </div>
-                </div>
-            </div>
+  <!-- painel topologias -->
+  <div class="painel" id="painel-topologias">
+    <div class="topo-botoes">
+      <button class="topo-btn" data-topo="estrela"><i class="fas fa-star"></i> Layout em Estrela</button>
+      <button class="topo-btn" data-topo="barramento"><i class="fas fa-grip-lines"></i> Layout em Barramento</button>
+    </div>
+    <div id="topo-conteudo" class="topo-conteudo">
+      <h4 id="topo-titulo">Escolha uma topologia</h4>
+      <p id="topo-descricao">Clique em um botão para ver a explicação e as vantagens/desvantagens para o chão de fábrica.</p>
+      <div class="lista-vantagens" id="topo-listas"></div>
+    </div>
+  </div>
 
-            <div id="panel-cable-par" class="expand-panel c-panel">
-                <h2 class="lang-unit pt visible">Par Trançado Blindado (STP)</h2>
-                <h2 class="lang-unit en">Shielded Twisted Pair (STP)</h2>
-                <h2 class="lang-unit es">Par Trenzado Blindado (STP)</h2>
-                <div class="info-block">
-                    <h4 class="lang-unit pt visible">Uso na Fábrica</h4><h4 class="lang-unit en">Factory Use</h4><h4 class="lang-unit es">Uso en Fábrica</h4>
-                    <p class="lang-unit pt visible">Usado para conectar os Controladores Lógicos Programáveis (CLPs) às telas de operação (IHMs) e switches de distribuição dentro dos painéis elétricos.</p>
-                    <p class="lang-unit en">Used to connect Programmable Logic Controllers (PLCs) to Operating Panels (HMIs) and distribution switches inside electrical panels.</p>
-                    <p class="lang-unit es">Se utiliza para conectar Controladores Lógicos Programables (PLC) a pantallas de operación (HMI) y switches de distribución dentro de paneles eléctricos.</p>
-                </div>
-            </div>
+  <!-- mini jogo -->
+  <div class="jogo-area">
+    <h3><i class="fas fa-gamepad"></i> <span id="jogo-titulo">Mini Quiz · Redes Industriais</span> <span class="badge" id="jogo-placar">0/0</span></h3>
+    <div id="jogo-pergunta" class="pergunta">Carregando pergunta...</div>
+    <div id="jogo-opcoes" class="opcoes"></div>
+    <div>
+      <span id="jogo-feedback" class="feedback-jogo"> </span>
+      <button id="jogo-reset" class="reset-jogo"><i class="fas fa-rotate-right"></i> Nova pergunta</button>
+    </div>
+  </div>
 
-            <div id="panel-cable-fibra" class="expand-panel c-panel">
-                <h2 class="lang-unit pt visible">Fibra Óptica Industrial</h2>
-                <h2 class="lang-unit en">Industrial Fiber Optic</h2>
-                <h2 class="lang-unit es">Fibra Óptica Industrial</h2>
-                <div class="info-block">
-                    <h4 class="lang-unit pt visible">Uso na Fábrica</h4><h4 class="lang-unit en">Factory Use</h4><h4 class="lang-unit es">Uso en Fábrica</h4>
-                    <p class="lang-unit pt visible">Usada na interligação de redes entre diferentes galpões da fábrica ou em locais com altíssima interferência, como setores de solda robótica e fornos industriais.</p>
-                    <p class="lang-unit en">Used for interconnecting networks between different factory warehouses or in high-interference areas, such as robotic welding sectors and industrial furnaces.</p>
-                    <p class="lang-unit es">Se utiliza para interconectar redes entre diferentes naves de la fábrica o en lugares con altísima interferencia, como sectores de soldadura robótica y hornos industriales.</p>
-                </div>
-            </div>
+  <div class="footer">
+    <span><i class="fas fa-microchip"></i> Automação industrial · Rede de dados</span>
+    <span><i class="fas fa-shield-alt"></i> Guia visual interativo</span>
+  </div>
+</div>
 
-            <div id="panel-cable-wireless" class="expand-panel c-panel">
-                <h2 class="lang-unit pt visible">Redes Sem Fio (Wireless)</h2>
-                <h2 class="lang-unit en">Wireless Networks</h2>
-                <h2 class="lang-unit es">Redes Inalámbricas (Wireless)</h2>
-                <div class="info-block">
-                    <h4 class="lang-unit pt visible">Uso na Fábrica</h4><h4 class="lang-unit en">Factory Use</h4><h4 class="lang-unit es">Uso en Fábrica</h4>
-                    <p class="lang-unit pt visible">Aplicado no monitoramento de sensores de difícil acesso, tanques de armazenamento externos, pátios de matéria-prima e em pontes rolantes ou veículos autônomos (AGVs).</p>
-                    <p class="lang-unit en">Applied for monitoring hard-to-reach sensors, outdoor storage tanks, raw material yards, overhead cranes, or automated guided vehicles (AGVs).</p>
-                    <p class="lang-unit es">Se aplica en el monitoreo de sensores de difícil acceso, tanques de almacenamiento externos, patios de materia prima y en grúas viajeras o vehículos guiados automáticos (AGV).</p>
-                </div>
-            </div>
-        </section>
+<script>
+  (function() {
+    // ---------- idiomas ----------
+    const idiomaBotoes = document.querySelectorAll('.idioma-btn');
+    let idiomaAtual = 'pt';
 
-        <section id="content-topologias" class="tab-content">
-            <div class="topology-controls">
-                <button id="btopo-e" class="btn-topo" onclick="showTopology('estrela')">
-                    <span class="lang-unit pt visible">Layout em Estrela</span>
-                    <span class="lang-unit en">Star Layout</span>
-                    <span class="lang-unit es">Diseño en Estrella</span>
-                </button>
-                <button id="btopo-b" class="btn-topo" onclick="showTopology('barramento')">
-                    <span class="lang-unit pt visible">Layout em Barramento</span>
-                    <span class="lang-unit en">Bus Layout</span>
-                    <span class="lang-unit es">Diseño en Bus</span>
-                </button>
-            </div>
+    function atualizarIdioma(idioma) {
+      idiomaAtual = idioma;
+      // atualiza textos dos cabos se houver explicação visível
+      const caboSelecionado = document.querySelector('.card-cabo.selecionado');
+      if (caboSelecionado) {
+        const tipo = caboSelecionado.dataset.cabo;
+        mostrarExplicacaoCabo(tipo);
+      }
+      // topologias: textos fixos em cada idioma (hardcoded via função)
+      const topoAtivo = document.querySelector('.topo-btn.ativo');
+      if (topoAtivo) {
+        const tipo = topoAtivo.dataset.topo;
+        mostrarTopologia(tipo);
+      }
+      // jogo: traduzir pergunta atual
+      if (window.perguntaAtual !== undefined) {
+        const pergunta = perguntas[window.perguntaAtual];
+        if (pergunta) exibirPergunta(pergunta);
+      }
+    }
 
-            <div id="panel-topo-estrela" class="topo-panel t-panel">
-                <h2 class="lang-unit pt visible">Topologia em Estrela (Star Layout)</h2>
-                <h2 class="lang-unit en">Star Topology (Star Layout)</h2>
-                <h2 class="lang-unit es">Topología en Estrella (Diseño en Estrella)</h2>
-                
-                <p class="lang-unit pt visible" style="margin: 10px 0; color: var(--texto-escuro);">Arquitetura padrão das redes Ethernet modernas. Cada máquina ou CLP possui seu próprio cabo conectado a um switch central.</p>
-                <p class="lang-unit en" style="margin: 10px 0; color: var(--texto-escuro);">Standard architecture for modern Ethernet networks. Each machine or PLC has its own cable connected to a central switch.</p>
-                <p class="lang-unit es" style="margin: 10px 0; color: var(--texto-escuro);">Arquitectura estándar de las redes Ethernet modernas. Cada máquina o PLC tiene su propio cable conectado a un switch central.</p>
+    idiomaBotoes.forEach(btn => {
+      btn.addEventListener('click', function() {
+        idiomaBotoes.forEach(b => b.classList.remove('ativo'));
+        this.classList.add('ativo');
+        const lang = this.dataset.idioma;
+        atualizarIdioma(lang);
+      });
+    });
 
-                <div style="text-align: center; margin: 25px 0;">
-                    <svg width="150" height="150" viewBox="0 0 100 100">
-                        <line x1="50" y1="50" x2="20" y2="20" stroke="#0066ff" stroke-width="2.5"/>
-                        <line x1="50" y1="50" x2="80" y2="20" stroke="#0066ff" stroke-width="2.5"/>
-                        <line x1="50" y1="50" x2="20" y2="80" stroke="#0066ff" stroke-width="2.5"/>
-                        <line x1="50" y1="50" x2="80" y2="80" stroke="#0066ff" stroke-width="2.5"/>
-                        <circle cx="50" cy="50" r="12" fill="#0066ff"/>
-                        <circle cx="20" cy="20" r="8" fill="#0c162b" stroke="#3385ff" stroke-width="2"/>
-                        <circle cx="80" cy="20" r="8" fill="#0c162b" stroke="#3385ff" stroke-width="2"/>
-                        <circle cx="20" cy="80" r="8" fill="#0c162b" stroke="#3385ff" stroke-width="2"/>
-                        <circle cx="80" cy="80" r="8" fill="#0c162b" stroke="#3385ff" stroke-width="2"/>
-                    </svg>
-                </div>
+    // ---------- abas ----------
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const paineis = {
+      cabos: document.getElementById('painel-cabos'),
+      topologias: document.getElementById('painel-topologias')
+    };
 
-                <div class="topo-grid">
-                    <div class="list-box vantagens">
-                        <h4 class="lang-unit pt visible">Vantagens</h4><h4 class="lang-unit en">Advantages</h4><h4 class="lang-unit es">Ventajas</h4>
-                        <ul class="lang-unit pt visible"><li>Se um cabo quebrar, apenas uma máquina isolada cai.</li><li>Muito fácil de descobrir em qual cabo está o defeito.</li></ul>
-                        <ul class="lang-unit en"><li>If one cable breaks, only one isolated machine stops.</li><li>Very easy to find which cable has the fault.</li></ul>
-                        <ul class="lang-unit es"><li>Si un cable se rompe, solo una máquina aislada se detiene.</li><li>Muy fácil de encontrar qué cable tiene la falla.</li></ul>
-                    </div>
-                    <div class="list-box desvantagens">
-                        <h4 class="lang-unit pt visible">Desvantagens</h4><h4 class="lang-unit en">Disadvantages</h4><h4 class="lang-unit es">Desventajas</h4>
-                        <ul class="lang-unit pt visible"><li>Se o Switch Central quebrar, a fábrica inteira para.</li><li>Gasta muito mais metros de cabo elétrico.</li></ul>
-                        <ul class="lang-unit en"><li>If the Central Switch breaks, the whole factory stops.</li><li>Uses significantly more meters of electrical cable.</li></ul>
-                        <ul class="lang-unit es"><li>Si el Switch Central se avería, toda la fábrica se detiene.</li><li>Consume muchos más metros de cable eléctrico.</li></ul>
-                    </div>
-                </div>
-            </div>
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        tabBtns.forEach(b => b.classList.remove('ativo'));
+        this.classList.add('ativo');
+        const aba = this.dataset.tab;
+        Object.keys(paineis).forEach(key => {
+          paineis[key].classList.toggle('ativo', key === aba);
+        });
+      });
+    });
 
-            <div id="panel-topo-barramento" class="topo-panel t-panel">
-                <h2 class="lang-unit pt visible">Topologia em Barramento (Bus Layout)</h2>
-                <h2 class="lang-unit en">Bus Topology (Bus Layout)</h2>
-                <h2 class="lang-unit es">Topología en Bus (Diseño en Bus)</h2>
+    // ---------- cabos ----------
+    const cardsCabos = document.querySelectorAll('.card-cabo');
+    const explicacaoDiv = document.getElementById('explicacao-cabo');
+    const textoExplicacao = document.getElementById('texto-explicacao');
 
-                <p class="lang-unit pt visible" style="margin: 10px 0; color: var(--texto-escuro);">Modelo clássico de redes de campo (Profibus). Todos os equipamentos compartilham em linha o mesmo cabo físico.</p>
-                <p class="lang-unit en" style="margin: 10px 0; color: var(--texto-escuro);">Classic fieldbus model (Profibus). All devices share the exact same linear physical cable.</p>
-                <p class="lang-unit es" style="margin: 10px 0; color: var(--texto-escuro);">Modelo clásico de redes de campo (Profibus). Todos los equipos comparten en línea el mismo cable físico.</p>
-
-                <div style="text-align: center; margin: 25px 0;">
-                    <svg width="200" height="100" viewBox="0 0 120 60">
-                        <line x1="10" y1="30" x2="110" y2="30" stroke="#0066ff" stroke-width="3"/>
-                        <line x1="25" y1="30" x2="25" y2="15" stroke="#3385ff" stroke-width="2"/>
-                        <line x1="60" y1="30" x2="60" y2="15" stroke="#3385ff" stroke-width="2"/>
-                        <line x1="95" y1="30" x2="95" y2="15" stroke="#3385ff" stroke-width="2"/>
-                        <rect x="15" y="5" width="20" height="10" fill="#0c162b" stroke="#3385ff" stroke-width="1.5"/>
-                        <rect x="50" y="5" width="20" height="10" fill="#0c162b" stroke="#3385ff" stroke-width="1.5"/>
-                        <rect x="85" y="5" width="20" height="10" fill="#0c162b" stroke="#3385ff" stroke-width="1.5"/>
-                    </svg>
-                </div>
-
-                <div class="topo-grid">
-                    <div class="list-box vantagens">
-                        <h4 class="lang-unit pt visible">Vantagens</h4><h4 class="lang-unit en">Advantages</h4><h4 class="lang-unit es">Ventajas</h4>
-                        <ul class="lang-unit pt visible"><li>Grande economia de cabos e infraestrutura metálica.</li><li>Instalação inicial limpa e linear pelo galpão.</li></ul>
-                        <ul class="lang-unit en"><li>Great savings in cables and metallic infrastructure.</li><li>Clean and linear initial installation through the warehouse.</li></ul>
-                        <ul class="lang-unit es"><li>Gran ahorro en cables e infraestructura metálica.</li><li>Instalación inicial limpia y lineal por la nave.</li></ul>
-                    </div>
-                    <div class="list-box desvantagens">
-                        <h4 class="lang-unit pt visible">Desvantagens</h4><h4 class="lang-unit en">Disadvantages</h4><h4 class="lang-unit es">Desventajas</h4>
-                        <ul class="lang-unit pt visible"><li>Se o cabo principal partir, tudo o que vem depois desliga.</li><li>Extrema dificuldade para achar conectores frouxos.</li></ul>
-                        <ul class="lang-unit en"><li>If the main cable breaks, everything down the line disconnects.</li><li>Extremely difficult to find loose connectors.</li></ul>
-                        <ul class="lang-unit es"><li>Si el cable principal se rompe, todo lo que sigue se desconecta.</li><li>Extrema dificultad para encontrar conectores flojos.</li></ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="content-jogo" class="tab-content">
-            <div class="game-card">
-                <div class="score-board">
-                    <span class="lang-unit pt visible">Pontos</span><span class="lang-unit en">Score</span><span class="lang-unit es">Puntos</span>: <span id="val-score">0</span>
-                </div>
-                
-                <h2 class="lang-unit pt visible">Desafio Tecnológico Industrial</h2>
-                <h2 class="lang-unit en">Industrial Technical Challenge</h2>
-                <h2 class="lang-unit es">Desafío Técnico Industrial</h2>
-
-                <div id="q-block-1">
-                    <p class="game-q class-pt lang-unit pt visible">1. Qual meio de transmissão é completamente imune a ruídos elétricos de motores e painéis de solda?</p>
-                    <p class="game-q class-en lang-unit en">1. Which transmission medium is completely immune to electrical noise from motors and welding panels?</p>
-                    <p class="game-q class-es lang-unit es">1. ¿Qué medio de transmisión es completamente inmune al ruido eléctrico de motores y paneles de soldadura?</p>
-                    <div class="game-options">
-                        <button class="opt-btn" onclick="ans(1, true)">A) Fibra Óptica / Fiber Optic</button>
-                        <button class="opt-btn" onclick="ans(1, false)">B) Par Trançado / Twisted Pair</button>
-                        <button class="opt-btn" onclick="ans(1, false)">C) Wireless</button>
-                    </div>
-                </div>
-
-                <div id="q-block-2" style="display: none;">
-                    <p class="game-q class-pt lang-unit pt visible">2. Se o rompimento de um único cabo derrubar a comunicação de metade dos sensores da fábrica, qual topologia estava em uso?</p>
-                    <p class="game-q class-en lang-unit en">2. If a single cable break disconnects half the sensors in the factory, which topology was in use?</p>
-                    <p class="game-q class-es lang-unit es">2. Si la rotura de un solo cable interrumpe la comunicación de la mitad de los sensores de la fábrica, ¿qué topología estaba en uso?</p>
-                    <div class="game-options">
-                        <button class="opt-btn" onclick="ans(2, false)">A) Estrela / Star</button>
-                        <button class="opt-btn" onclick="ans(2, true)">B) Barramento / Bus</button>
-                    </div>
-                </div>
-
-                <div id="g-ok" class="feedback" style="background-color: rgba(0,204,102,0.15); color: var(--verde-sucesso); border: 1px solid var(--verde-sucesso);">
-                    <span class="lang-unit pt visible">Certo! +10 pontos salvos na rede.</span>
-                    <span class="lang-unit en">Correct! +10 network points saved.</span>
-                    <span class="lang-unit es">¡Correcto! +10 puntos de red guardados.</span>
-                </div>
-                <div id="g-err" class="feedback" style="background-color: rgba(255,51,51,0.15); color: var(--vermelho-erro); border: 1px solid var(--vermelho-erro);">
-                    <span class="lang-unit pt visible">Errado. Esse meio ou layout falharia nessa condição técnica. Tente outra vez!</span>
-                    <span class="lang-unit en">Wrong. This medium or layout would fail under this technical condition. Try again!</span>
-                    <span class="lang-unit es">Incorrecto. Este medio o diseño fallaría en esta condición técnica. ¡Inténtalo de nuevo!</span>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Guia Visual de Redes para Automação. Industrial Cybersecurity System.</p>
-    </footer>
-
-    <script>
-        let globalLang = 'pt';
-        let currentPoints = 0;
-
-        // Gerenciador Global de Idiomas
-        function changeLang(lang) {
-            globalLang = lang;
-            
-            // Ajusta o estado visual dos botões de seleção
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('lang-' + lang).classList.add('active');
-
-            // Varre e altera a visibilidade de todas as tags de idiomas do portal
-            document.querySelectorAll('.lang-unit').forEach(unit => {
-                if(unit.classList.contains(lang)) {
-                    unit.style.display = 'inline';
-                    // Correção de bloco para tags de parágrafos ou títulos
-                    if(unit.tagName === 'P' || unit.tagName === 'SPAN' && unit.parentElement.classList.contains('tab-btn') === false) {
-                        if(unit.tagName === 'P') unit.style.display = 'block';
-                    }
-                } else {
-                    unit.style.display = 'none';
-                }
-            });
+    function mostrarExplicacaoCabo(tipo) {
+      const dados = document.querySelectorAll('#dados-cabos [data-idioma]');
+      let texto = '';
+      for (let bloco of dados) {
+        if (bloco.dataset.idioma === idiomaAtual) {
+          const item = bloco.querySelector(`[data-cabo="${tipo}"]`);
+          if (item) texto = item.innerHTML;
+          break;
         }
+      }
+      if (!texto) texto = 'Informação não disponível no idioma selecionado.';
+      textoExplicacao.innerHTML = texto;
+      explicacaoDiv.classList.remove('hidden');
+    }
 
-        // Gerenciador de Abas do Portal
-        function switchTab(target) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    cardsCabos.forEach(card => {
+      card.addEventListener('click', function() {
+        cardsCabos.forEach(c => c.classList.remove('selecionado'));
+        this.classList.add('selecionado');
+        const tipo = this.dataset.cabo;
+        mostrarExplicacaoCabo(tipo);
+      });
+    });
 
-            if(target === 'cabos') {
-                document.getElementById('content-cabos').classList.add('active');
-                document.getElementById('tab-b1').classList.add('active');
-            } else if(target === 'topologias') {
-                document.getElementById('content-topologias').classList.add('active');
-                document.getElementById('tab-b2').classList.add('active');
-            } else if(target === 'jogo') {
-                document.getElementById('content-jogo').classList.add('active');
-                document.getElementById('tab-b3').classList.add('active');
-            }
+    // ---------- topologias ----------
+    const topoBotoes = document.querySelectorAll('.topo-btn');
+    const topoTitulo = document.getElementById('topo-titulo');
+    const topoDescricao = document.getElementById('topo-descricao');
+    const topoListas = document.getElementById('topo-listas');
+
+    const dadosTopologias = {
+      pt: {
+        estrela: {
+          titulo: '⭐ Layout em Estrela',
+          desc: 'Todos os dispositivos se conectam a um switch central. Muito comum em células de manufatura e ilhas de automação.',
+          vantagens: ['🟢 Facilidade de expansão', '🟢 Falha em um nó não afeta os demais', '🟢 Diagnóstico simplificado'],
+          desvantagens: ['🔴 Dependência do switch central', '🔴 Mais cabos (maior custo)', '🔴 Ponto único de falha']
+        },
+        barramento: {
+          titulo: '📶 Layout em Barramento',
+          desc: 'Todos os dispositivos compartilham o mesmo meio físico (cabo). Usado em redes RS-485, DeviceNet e Profibus DP.',
+          vantagens: ['🟢 Menor quantidade de cabos', '🟢 Fácil de implementar', '🟢 Custo reduzido'],
+          desvantagens: ['🔴 Se o cabo principal falha, toda a rede cai', '🔴 Dificuldade em isolar falhas', '🔴 Desempenho degrada com muitos nós']
         }
-
-        // Exibição de cards da primeira aba
-        function showCable(type) {
-            document.querySelectorAll('.c-panel').forEach(p => p.style.display = 'none');
-            const targetPanel = document.getElementById('panel-cable-' + type);
-            if(targetPanel) {
-                targetPanel.style.display = 'block';
-                targetPanel.scrollIntoView({ behavior: 'smooth' });
-            }
+      },
+      en: {
+        estrela: {
+          titulo: '⭐ Star Topology',
+          desc: 'All devices connect to a central switch. Common in manufacturing cells and automation islands.',
+          vantagens: ['🟢 Easy expansion', '🟢 Node failure does not affect others', '🟢 Simplified diagnostics'],
+          desvantagens: ['🔴 Central switch dependency', '🔴 More cables (higher cost)', '🔴 Single point of failure']
+        },
+        barramento: {
+          titulo: '📶 Bus Topology',
+          desc: 'All devices share the same physical medium. Used in RS-485, DeviceNet, and Profibus DP networks.',
+          vantagens: ['🟢 Less cabling', '🟢 Easy to implement', '🟢 Lower cost'],
+          desvantagens: ['🔴 Main cable failure brings down the whole network', '🔴 Hard to isolate faults', '🔴 Performance degrades with many nodes']
         }
-
-        // Exibição de botões da segunda aba
-        function showTopology(type) {
-            document.querySelectorAll('.t-panel').forEach(p => p.style.display = 'none');
-            document.getElementById('btopo-e').classList.remove('active');
-            document.getElementById('btopo-b').classList.remove('active');
-
-            if(type === 'estrela') {
-                document.getElementById('panel-topo-estrela').style.display = 'block';
-                document.getElementById('btopo-e').classList.add('active');
-                document.getElementById('panel-topo-estrela').scrollIntoView({ behavior: 'smooth' });
-            } else {
-                document.getElementById('panel-topo-barramento').style.display = 'block';
-                document.getElementById('btopo-b').classList.add('active');
-                document.getElementById('panel-topo-barramento').scrollIntoView({ behavior: 'smooth' });
-            }
+      },
+      es: {
+        estrela: {
+          titulo: '⭐ Topología en Estrella',
+          desc: 'Todos los dispositivos se conectan a un switch central. Común en celdas de fabricación e islas de automatización.',
+          vantagens: ['🟢 Fácil expansión', '🟢 Fallo de nodo no afecta a los demás', '🟢 Diagnóstico simplificado'],
+          desvantagens: ['🔴 Dependencia del switch central', '🔴 Más cableado (mayor costo)', '🔴 Punto único de fallo']
+        },
+        barramento: {
+          titulo: '📶 Topología en Bus',
+          desc: 'Todos los dispositivos comparten el mismo medio físico. Usado en RS-485, DeviceNet y Profibus DP.',
+          vantagens: ['🟢 Menos cableado', '🟢 Fácil de implementar', '🟢 Costo reducido'],
+          desvantagens: ['🔴 Si el cable principal falla, toda la red cae', '🔴 Dificultad para aislar fallas', '🔴 El rendimiento degrada con muchos nodos']
         }
+      }
+    };
 
-        // Sistema de validação do Mini Jogo Estático
-        function ans(questionNum, isCorrect) {
-            const okBox = document.getElementById('g-ok');
-            const errBox = document.getElementById('g-err');
+    function mostrarTopologia(tipo) {
+      const dados = dadosTopologias[idiomaAtual] || dadosTopologias.pt;
+      const info = dados[tipo];
+      if (!info) return;
+      topoTitulo.textContent = info.titulo;
+      topoDescricao.textContent = info.desc;
+      topoListas.innerHTML = `
+        <ul>${info.vantagens.map(v => `<li><i class="fas fa-check-circle" style="color:#3db87a;"></i> ${v}</li>`).join('')}</ul>
+        <ul>${info.desvantagens.map(d => `<li><i class="fas fa-times-circle" style="color:#b83d5a;"></i> ${d}</li>`).join('')}</ul>
+      `;
+    }
 
-            okBox.style.display = 'none';
-            errBox.style.display = 'none';
+    topoBotoes.forEach(btn => {
+      btn.addEventListener('click', function() {
+        topoBotoes.forEach(b => b.classList.remove('ativo'));
+        this.classList.add('ativo');
+        const tipo = this.dataset.topo;
+        mostrarTopologia(tipo);
+      });
+    });
+    // ativa estrela por padrão
+    document.querySelector('.topo-btn[data-topo="estrela"]')?.classList.add('ativo');
+    mostrarTopologia('estrela');
 
-            if(isCorrect) {
-                currentPoints += 10;
-                document.getElementById('val-score').textContent = currentPoints;
-                okBox.style.display = 'block';
+    // ---------- mini jogo ----------
+    const perguntas = [
+      {
+        pt: { pergunta: 'Qual cabo é mais indicado para longas distâncias em fábricas com alta interferência?', opcoes: ['Par Trançado', 'Fibra Óptica', 'Wireless'], resposta: 1 },
+        en: { pergunta: 'Which cable is best for long distances in factories with high EMI?', opcoes: ['Twisted Pair', 'Fiber Optic', 'Wireless'], resposta: 1 },
+        es: { pergunta: '¿Qué cable es mejor para largas distancias en fábricas con alta interferencia?', opcoes: ['Par Trenzado', 'Fibra Óptica', 'Wireless'], resposta: 1 }
+      },
+      {
+        pt: { pergunta: 'Na topologia em estrela, qual é a principal desvantagem?', opcoes: ['Custo baixo', 'Dependência do switch central', 'Fácil diagnóstico'], resposta: 1 },
+        en: { pergunta: 'In star topology, what is the main disadvantage?', opcoes: ['Low cost', 'Central switch dependency', 'Easy diagnostics'], resposta: 1 },
+        es: { pergunta: 'En topología estrella, ¿cuál es la principal desventaja?', opcoes: ['Bajo costo', 'Dependencia del switch central', 'Diagnóstico fácil'], resposta: 1 }
+      },
+      {
+        pt: { pergunta: 'Qual tecnologia é usada para conectar AGVs e robôs móveis?', opcoes: ['Fibra Óptica', 'Par Trançado', 'Wireless'], resposta: 2 },
+        en: { pergunta: 'Which technology is used to connect AGVs and mobile robots?', opcoes: ['Fiber Optic', 'Twisted Pair', 'Wireless'], resposta: 2 },
+        es: { pergunta: '¿Qué tecnología se usa para conectar AGVs y robots móviles?', opcoes: ['Fibra Óptica', 'Par Trenzado', 'Wireless'], resposta: 2 }
+      }
+    ];
 
-                setTimeout(() => {
-                    okBox.style.display = 'none';
-                    if(questionNum === 1) {
-                        document.getElementById('q-block-1').style.display = 'none';
-                        document.getElementById('q-block-2').style.display = 'block';
-                    } else {
-                        document.getElementById('q-block-2').style.display = 'none';
-                        document.getElementById('q-block-1').style.display = 'block';
-                    }
-                }, 1800);
-            } else {
-                errBox.style.display = 'block';
-            }
-        }
-    </script>
+    let perguntaAtual = 0;
+    let pontuacao = 0;
+    let totalRespondidas = 0;
+    let respostaBloqueada = false;
+
+    const jogoPergunta = document.getElementById('jogo-pergunta');
+    const jogoOpcoes = document.getElementById('jogo-opcoes');
+    const jogoFeedback = document.getElementById('jogo-feedback');
+    const jogoPlacar = document.getElementById('jogo-placar');
+    const resetBtn = document.getElementById('jogo-reset');
+
+    function exibirPergunta(perguntaObj) {
+      const lang = idiomaAtual;
+      const dados = perguntaObj[lang] || perguntaObj.pt;
+      jogoPergunta.textContent = dados.pergunta;
+      jogoOpcoes.innerHTML = '';
+      dados.opcoes.forEach((opcao, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'opcao-btn';
+        btn.textContent = opcao;
+        btn.dataset.indice = idx;
+        btn.addEventListener('click', function() {
+          if (respostaBloqueada) return;
+          const escolhido = parseInt(this.dataset.indice);
+          const certo = dados.resposta;
+          const acertou = escolhido === certo;
+          totalRespondidas++;
+          if (acertou) pontuacao++;
+          // feedback visual
+          const allBtns = jogoOpcoes.querySelectorAll('.opcao-btn');
+          allBtns.forEach(b => {
+            b.disabled = true;
+            const idxB = parseInt(b.dataset.indice);
+            if (idxB === certo) b.classList.add('certo');
+            else if (idxB === escolhido && !acertou) b.classList.add('errado');
+          });
+          jogoFeedback.textContent = acertou ? '✅ Correto!' : '❌ Errado!';
+          respostaBloqueada = true;
+          atualizarPlacar();
+        });
+        jogoOpcoes.appendChild(btn);
+      });
+      respostaBloqueada = false;
+      jogoFeedback.textContent = ' ';
+    }
+
+    function atualizarPlacar() {
+      jogoPlacar.textContent = `${pontuacao}/${totalRespondidas}`;
+    }
+
+    function novaPergunta() {
+      perguntaAtual = (perguntaAtual + 1) % perguntas.length;
+      const pergunta = perguntas[perguntaAtual];
+      exibirPergunta(pergunta);
+      window.perguntaAtual = perguntaAtual;
+    }
+
+    resetBtn.addEventListener('click', function() {
+      novaPergunta();
+    });
+
+    // inicia jogo
+    window.perguntaAtual = 0;
+    exibirPergunta(perguntas[0]);
+
+    // ao mudar idioma, atualiza pergunta
+    const observerIdioma = new MutationObserver(() => {});
+    // já atualiza via atualizarIdioma
+    const originalAtualizarIdioma = atualizarIdioma;
+    atualizarIdioma = function(idioma) {
+      originalAtualizarIdioma(idioma);
+      // recarregar pergunta
+      const pergunta = perguntas[perguntaAtual];
+      if (pergunta) exibirPergunta(pergunta);
+    };
+    // sobrescreve no escopo
+    window.atualizarIdioma = atualizarIdioma;
+
+    // ajuste para o clique de idioma chamar o novo
+    idiomaBotoes.forEach(btn => {
+      btn.removeEventListener('click', function() {});
+    });
+    idiomaBotoes.forEach(btn => {
+      btn.addEventListener('click', function() {
+        idiomaBotoes.forEach(b => b.classList.remove('ativo'));
+        this.classList.add('ativo');
+        const lang = this.dataset.idioma;
+        if (window.atualizarIdioma) window.atualizarIdioma(lang);
+        else atualizarIdioma(lang);
+      });
+    });
+    // reaplica ativo
+    document.querySelector('.idioma-btn.ativo')?.click();
+
+  })();
+</script>
 </body>
 </html>
