@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia Visual de Redes para Automação</title>
     <style>
-        /* TEMA DE CORES: PRETO E AZUL */
+        /* CONFIGURAÇÃO DE CORES: AMBIENTE INDUSTRIAL PRETO E AZUL */
         :root {
-            --bg-principal: #050811;
-            --bg-card: #0d1527;
-            --bg-nav: #090e1a;
+            --bg-principal: #050914;
+            --bg-card: #0c162b;
+            --bg-nav: #081020;
             --azul-eletrico: #0066ff;
             --azul-brilhante: #3385ff;
-            --azul-escuro: #0a2240;
-            --texto-claro: #f0f5ff;
-            --texto-escuro: #8fa3c7;
+            --azul-escuro: #0a1d37;
+            --texto-claro: #f0f4fc;
+            --texto-escuro: #8fa5c7;
             --verde-sucesso: #00cc66;
             --vermelho-erro: #ff3333;
         }
@@ -23,7 +23,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
         }
 
         body {
@@ -55,7 +55,6 @@
         .logo-container h1 {
             font-size: 24px;
             font-weight: 800;
-            letter-spacing: -0.5px;
             color: #ffffff;
             text-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
         }
@@ -147,7 +146,6 @@
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
         }
 
         .card:hover {
@@ -158,7 +156,7 @@
 
         .card-img-container {
             height: 180px;
-            background: linear-gradient(135deg, #09101f, #050811);
+            background: linear-gradient(135deg, #091224, #050914);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -181,6 +179,7 @@
             line-height: 1.5;
         }
 
+        /* PAINÉIS DE INFORMAÇÕES EXTRAS */
         .expand-panel {
             background-color: var(--bg-card);
             border: 2px solid var(--azul-eletrico);
@@ -198,7 +197,7 @@
 
         .info-block {
             margin-top: 20px;
-            background-color: rgba(5, 8, 17, 0.6);
+            background-color: rgba(5, 9, 20, 0.6);
             padding: 20px;
             border-radius: 8px;
             border-left: 4px solid var(--azul-eletrico);
@@ -277,7 +276,7 @@
         .list-box ul { list-style-position: inside; padding-left: 5px; }
         .list-box li { margin-bottom: 10px; font-size: 14px; color: var(--texto-claro); line-height: 1.4; }
 
-        /* MINI JOGO (ABA 3) */
+        /* MINI JOGO DE PERGUNTAS STATIC (SEM RISCO DE TRAVAMENTO) */
         .game-card {
             max-width: 650px;
             margin: 0 auto;
@@ -324,6 +323,7 @@
             font-size: 15px;
             font-weight: 500;
             transition: all 0.2s ease;
+            width: 100%;
         }
 
         .opt-btn:hover {
@@ -338,6 +338,14 @@
             font-weight: bold;
             text-align: center;
             display: none;
+        }
+
+        .lang-unit {
+            display: none;
+        }
+
+        .lang-unit.visible {
+            display: block;
         }
 
         /* FOOTER */
@@ -356,40 +364,57 @@
 
     <header>
         <div class="logo-container">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0066ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-            <h1 id="main-title">Guia Visual de Redes para Automação</h1>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0066ff" stroke-width="2.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+            <h1 class="lang-unit pt visible">Guia Visual de Redes para Automação</h1>
+            <h1 class="lang-unit en">Visual Network Guide for Automation</h1>
+            <h1 class="lang-unit es">Guia Visual de Redes para Automatización</h1>
         </div>
         <div class="lang-selector">
-            <button id="lang-pt" class="lang-btn active">PT</button>
-            <button id="lang-en" class="lang-btn">EN</button>
-            <button id="lang-es" class="lang-btn">ES</button>
+            <button id="lang-pt" class="lang-btn active" onclick="changeLang('pt')">PT</button>
+            <button id="lang-en" class="lang-btn" onclick="changeLang('en')">EN</button>
+            <button id="lang-es" class="lang-btn" onclick="changeLang('es')">ES</button>
         </div>
     </header>
 
     <nav>
-        <button id="btn-tab-cabos" class="tab-btn active">Cabos Industriais</button>
-        <button id="btn-tab-topologias" class="tab-btn">Topologias</button>
-        <button id="btn-tab-jogo" class="tab-btn">Mini Jogo</button>
+        <button id="tab-b1" class="tab-btn active" onclick="switchTab('cabos')">
+            <span class="lang-unit pt visible">Cabos Industriais</span>
+            <span class="lang-unit en">Industrial Cables</span>
+            <span class="lang-unit es">Cables Industriales</span>
+        </button>
+        <button id="tab-b2" class="tab-btn" onclick="switchTab('topologias')">
+            <span class="lang-unit pt visible">Topologias</span>
+            <span class="lang-unit en">Topologies</span>
+            <span class="lang-unit es">Topologías</span>
+        </button>
+        <button id="tab-b3" class="tab-btn" onclick="switchTab('jogo')">
+            <span class="lang-unit pt visible">Mini Jogo</span>
+            <span class="lang-unit en">Mini Game</span>
+            <span class="lang-unit es">Mini Juego</span>
+        </button>
     </nav>
 
     <main>
         
-        <section id="tab-cabos" class="tab-content active">
+        <section id="content-cabos" class="tab-content active">
             <div class="cards-grid">
-                <div class="card" data-cable="par">
+                <div class="card" onclick="showCable('par')">
                     <div class="card-img-container">
                         <svg width="120" height="120" viewBox="0 0 100 100">
-                            <rect x="10" y="40" width="80" height="20" rx="5" fill="#0d1527" stroke="#0066ff" stroke-width="2"/>
+                            <rect x="10" y="40" width="80" height="20" rx="5" fill="#0c162b" stroke="#0066ff" stroke-width="2"/>
                             <path d="M15 50 Q 30 35, 45 50 T 75 50 T 85 50" fill="none" stroke="#3385ff" stroke-width="3"/>
                             <path d="M15 50 Q 30 65, 45 50 T 75 50 T 85 50" fill="none" stroke="#0044cc" stroke-width="3"/>
                         </svg>
                     </div>
                     <div class="card-body">
-                        <h3 id="c1-t">Par Trançado</h3>
-                        <p id="c1-d">Clique para ver onde e como este elemento de cobre blindado atua na infraestrutura industrial.</p>
+                        <h3>Par Trançado / Twisted Pair</h3>
+                        <p class="lang-unit pt visible">Clique para ver onde e como este cabo de cobre blindado atua no chão de fábrica.</p>
+                        <p class="lang-unit en">Click to see where and how this shielded copper cable works on the factory floor.</p>
+                        <p class="lang-unit es">Haga clic para ver dónde y cómo funciona este cable de cobre blindado en la planta.</p>
                     </div>
                 </div>
-                <div class="card" data-cable="fibra">
+
+                <div class="card" onclick="showCable('fibra')">
                     <div class="card-img-container">
                         <svg width="120" height="120" viewBox="0 0 100 100">
                             <circle cx="50" cy="50" r="30" fill="none" stroke="#0066ff" stroke-width="2" stroke-dasharray="4 4"/>
@@ -398,11 +423,14 @@
                         </svg>
                     </div>
                     <div class="card-body">
-                        <h3 id="c2-t">Fibra Óptica</h3>
-                        <p id="c2-d">Clique para entender o poder da imunidade eletromagnética total por feixes de luz.</p>
+                        <h3>Fibra Óptica / Fiber Optic</h3>
+                        <p class="lang-unit pt visible">Clique para entender o poder da imunidade eletromagnética total por feixes de luz.</p>
+                        <p class="lang-unit en">Click to understand the power of total electromagnetic immunity via light beams.</p>
+                        <p class="lang-unit es">Haga clic para comprender el poder de la inmunidad electromagnética total por haces de luz.</p>
                     </div>
                 </div>
-                <div class="card" data-cable="wireless">
+
+                <div class="card" onclick="showCable('wireless')">
                     <div class="card-img-container">
                         <svg width="120" height="120" viewBox="0 0 100 100">
                             <circle cx="50" cy="70" r="6" fill="#3385ff"/>
@@ -411,99 +439,289 @@
                         </svg>
                     </div>
                     <div class="card-body">
-                        <h3 id="c3-t">Wireless</h3>
-                        <p id="c3-d">Clique para analisar as aplicações de rádio frequência sem fio no chão de fábrica.</p>
+                        <h3>Wireless / Inalámbrico</h3>
+                        <p class="lang-unit pt visible">Clique para analisar as aplicações de rádio frequência sem fio em áreas industriais.</p>
+                        <p class="lang-unit en">Click to analyze industrial wireless radio frequency applications.</p>
+                        <p class="lang-unit es">Haga clic para analizar las aplicaciones de radiofrecuencia inalámbrica industrial.</p>
                     </div>
                 </div>
             </div>
 
-            <div id="cable-panel" class="expand-panel">
-                <h2 id="panel-title">Título do Cabo</h2>
+            <div id="panel-cable-par" class="expand-panel c-panel">
+                <h2 class="lang-unit pt visible">Par Trançado Blindado (STP)</h2>
+                <h2 class="lang-unit en">Shielded Twisted Pair (STP)</h2>
+                <h2 class="lang-unit es">Par Trenzado Blindado (STP)</h2>
                 <div class="info-block">
-                    <h4 id="lbl-uso">ONDE É USADO NA FÁBRICA?</h4>
-                    <p id="panel-use">Explicação simples do uso.</p>
+                    <h4 class="lang-unit pt visible">Uso na Fábrica</h4><h4 class="lang-unit en">Factory Use</h4><h4 class="lang-unit es">Uso en Fábrica</h4>
+                    <p class="lang-unit pt visible">Usado para conectar os Controladores Lógicos Programáveis (CLPs) às telas de operação (IHMs) e switches de distribuição dentro dos painéis elétricos.</p>
+                    <p class="lang-unit en">Used to connect Programmable Logic Controllers (PLCs) to Operating Panels (HMIs) and distribution switches inside electrical panels.</p>
+                    <p class="lang-unit es">Se utiliza para conectar Controladores Lógicos Programables (PLC) a pantallas de operación (HMI) y switches de distribución dentro de paneles eléctricos.</p>
                 </div>
+            </div>
+
+            <div id="panel-cable-fibra" class="expand-panel c-panel">
+                <h2 class="lang-unit pt visible">Fibra Óptica Industrial</h2>
+                <h2 class="lang-unit en">Industrial Fiber Optic</h2>
+                <h2 class="lang-unit es">Fibra Óptica Industrial</h2>
                 <div class="info-block">
-                    <h4 id="lbl-detalhes">DETALHES TÉCNICOS ADICIONAIS</h4>
-                    <p id="panel-tech">Informações adicionais ricas em detalhes.</p>
+                    <h4 class="lang-unit pt visible">Uso na Fábrica</h4><h4 class="lang-unit en">Factory Use</h4><h4 class="lang-unit es">Uso en Fábrica</h4>
+                    <p class="lang-unit pt visible">Usada na interligação de redes entre diferentes galpões da fábrica ou em locais com altíssima interferência, como setores de solda robótica e fornos industriais.</p>
+                    <p class="lang-unit en">Used for interconnecting networks between different factory warehouses or in high-interference areas, such as robotic welding sectors and industrial furnaces.</p>
+                    <p class="lang-unit es">Se utiliza para interconectar redes entre diferentes naves de la fábrica o en lugares con altísima interferencia, como sectores de soldadura robótica y hornos industriales.</p>
+                </div>
+            </div>
+
+            <div id="panel-cable-wireless" class="expand-panel c-panel">
+                <h2 class="lang-unit pt visible">Redes Sem Fio (Wireless)</h2>
+                <h2 class="lang-unit en">Wireless Networks</h2>
+                <h2 class="lang-unit es">Redes Inalámbricas (Wireless)</h2>
+                <div class="info-block">
+                    <h4 class="lang-unit pt visible">Uso na Fábrica</h4><h4 class="lang-unit en">Factory Use</h4><h4 class="lang-unit es">Uso en Fábrica</h4>
+                    <p class="lang-unit pt visible">Aplicado no monitoramento de sensores de difícil acesso, tanques de armazenamento externos, pátios de matéria-prima e em pontes rolantes ou veículos autônomos (AGVs).</p>
+                    <p class="lang-unit en">Applied for monitoring hard-to-reach sensors, outdoor storage tanks, raw material yards, overhead cranes, or automated guided vehicles (AGVs).</p>
+                    <p class="lang-unit es">Se aplica en el monitoreo de sensores de difícil acceso, tanques de almacenamiento externos, patios de materia prima y en grúas viajeras o vehículos guiados automáticos (AGV).</p>
                 </div>
             </div>
         </section>
 
-        <section id="tab-topologias" class="tab-content">
+        <section id="content-topologias" class="tab-content">
             <div class="topology-controls">
-                <button id="btn-e" class="btn-topo">Layout em Estrela</button>
-                <button id="btn-b" class="btn-topo">Layout em Barramento</button>
+                <button id="btopo-e" class="btn-topo" onclick="showTopology('estrela')">
+                    <span class="lang-unit pt visible">Layout em Estrela</span>
+                    <span class="lang-unit en">Star Layout</span>
+                    <span class="lang-unit es">Diseño en Estrella</span>
+                </button>
+                <button id="btopo-b" class="btn-topo" onclick="showTopology('barramento')">
+                    <span class="lang-unit pt visible">Layout em Barramento</span>
+                    <span class="lang-unit en">Bus Layout</span>
+                    <span class="lang-unit es">Diseño en Bus</span>
+                </button>
             </div>
 
-            <div id="topo-panel" class="topo-panel">
-                <h2 id="topo-title">Nome do Layout</h2>
-                <p id="topo-desc" style="margin-top: 10px; color: var(--texto-escuro); line-height: 1.6;"></p>
+            <div id="panel-topo-estrela" class="topo-panel t-panel">
+                <h2 class="lang-unit pt visible">Topologia em Estrela (Star Layout)</h2>
+                <h2 class="lang-unit en">Star Topology (Star Layout)</h2>
+                <h2 class="lang-unit es">Topología en Estrella (Diseño en Estrella)</h2>
                 
-                <div style="text-align: center; margin: 30px 0;" id="topo-svg-container"></div>
+                <p class="lang-unit pt visible" style="margin: 10px 0; color: var(--texto-escuro);">Arquitetura padrão das redes Ethernet modernas. Cada máquina ou CLP possui seu próprio cabo conectado a um switch central.</p>
+                <p class="lang-unit en" style="margin: 10px 0; color: var(--texto-escuro);">Standard architecture for modern Ethernet networks. Each machine or PLC has its own cable connected to a central switch.</p>
+                <p class="lang-unit es" style="margin: 10px 0; color: var(--texto-escuro);">Arquitectura estándar de las redes Ethernet modernas. Cada máquina o PLC tiene su propio cable conectado a un switch central.</p>
+
+                <div style="text-align: center; margin: 25px 0;">
+                    <svg width="150" height="150" viewBox="0 0 100 100">
+                        <line x1="50" y1="50" x2="20" y2="20" stroke="#0066ff" stroke-width="2.5"/>
+                        <line x1="50" y1="50" x2="80" y2="20" stroke="#0066ff" stroke-width="2.5"/>
+                        <line x1="50" y1="50" x2="20" y2="80" stroke="#0066ff" stroke-width="2.5"/>
+                        <line x1="50" y1="50" x2="80" y2="80" stroke="#0066ff" stroke-width="2.5"/>
+                        <circle cx="50" cy="50" r="12" fill="#0066ff"/>
+                        <circle cx="20" cy="20" r="8" fill="#0c162b" stroke="#3385ff" stroke-width="2"/>
+                        <circle cx="80" cy="20" r="8" fill="#0c162b" stroke="#3385ff" stroke-width="2"/>
+                        <circle cx="20" cy="80" r="8" fill="#0c162b" stroke="#3385ff" stroke-width="2"/>
+                        <circle cx="80" cy="80" r="8" fill="#0c162b" stroke="#3385ff" stroke-width="2"/>
+                    </svg>
+                </div>
 
                 <div class="topo-grid">
                     <div class="list-box vantagens">
-                        <h4 id="lbl-v">Vantagens no Chão de Fábrica</h4>
-                        <ul id="topo-v-list"></ul>
+                        <h4 class="lang-unit pt visible">Vantagens</h4><h4 class="lang-unit en">Advantages</h4><h4 class="lang-unit es">Ventajas</h4>
+                        <ul class="lang-unit pt visible"><li>Se um cabo quebrar, apenas uma máquina isolada cai.</li><li>Muito fácil de descobrir em qual cabo está o defeito.</li></ul>
+                        <ul class="lang-unit en"><li>If one cable breaks, only one isolated machine stops.</li><li>Very easy to find which cable has the fault.</li></ul>
+                        <ul class="lang-unit es"><li>Si un cable se rompe, solo una máquina aislada se detiene.</li><li>Muy fácil de encontrar qué cable tiene la falla.</li></ul>
                     </div>
                     <div class="list-box desvantagens">
-                        <h4 id="lbl-d">Desvantagens no Chão de Fábrica</h4>
-                        <ul id="topo-d-list"></ul>
+                        <h4 class="lang-unit pt visible">Desvantagens</h4><h4 class="lang-unit en">Disadvantages</h4><h4 class="lang-unit es">Desventajas</h4>
+                        <ul class="lang-unit pt visible"><li>Se o Switch Central quebrar, a fábrica inteira para.</li><li>Gasta muito mais metros de cabo elétrico.</li></ul>
+                        <ul class="lang-unit en"><li>If the Central Switch breaks, the whole factory stops.</li><li>Uses significantly more meters of electrical cable.</li></ul>
+                        <ul class="lang-unit es"><li>Si el Switch Central se avería, toda la fábrica se detiene.</li><li>Consume muchos más metros de cable eléctrico.</li></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panel-topo-barramento" class="topo-panel t-panel">
+                <h2 class="lang-unit pt visible">Topologia em Barramento (Bus Layout)</h2>
+                <h2 class="lang-unit en">Bus Topology (Bus Layout)</h2>
+                <h2 class="lang-unit es">Topología en Bus (Diseño en Bus)</h2>
+
+                <p class="lang-unit pt visible" style="margin: 10px 0; color: var(--texto-escuro);">Modelo clássico de redes de campo (Profibus). Todos os equipamentos compartilham em linha o mesmo cabo físico.</p>
+                <p class="lang-unit en" style="margin: 10px 0; color: var(--texto-escuro);">Classic fieldbus model (Profibus). All devices share the exact same linear physical cable.</p>
+                <p class="lang-unit es" style="margin: 10px 0; color: var(--texto-escuro);">Modelo clásico de redes de campo (Profibus). Todos los equipos comparten en línea el mismo cable físico.</p>
+
+                <div style="text-align: center; margin: 25px 0;">
+                    <svg width="200" height="100" viewBox="0 0 120 60">
+                        <line x1="10" y1="30" x2="110" y2="30" stroke="#0066ff" stroke-width="3"/>
+                        <line x1="25" y1="30" x2="25" y2="15" stroke="#3385ff" stroke-width="2"/>
+                        <line x1="60" y1="30" x2="60" y2="15" stroke="#3385ff" stroke-width="2"/>
+                        <line x1="95" y1="30" x2="95" y2="15" stroke="#3385ff" stroke-width="2"/>
+                        <rect x="15" y="5" width="20" height="10" fill="#0c162b" stroke="#3385ff" stroke-width="1.5"/>
+                        <rect x="50" y="5" width="20" height="10" fill="#0c162b" stroke="#3385ff" stroke-width="1.5"/>
+                        <rect x="85" y="5" width="20" height="10" fill="#0c162b" stroke="#3385ff" stroke-width="1.5"/>
+                    </svg>
+                </div>
+
+                <div class="topo-grid">
+                    <div class="list-box vantagens">
+                        <h4 class="lang-unit pt visible">Vantagens</h4><h4 class="lang-unit en">Advantages</h4><h4 class="lang-unit es">Ventajas</h4>
+                        <ul class="lang-unit pt visible"><li>Grande economia de cabos e infraestrutura metálica.</li><li>Instalação inicial limpa e linear pelo galpão.</li></ul>
+                        <ul class="lang-unit en"><li>Great savings in cables and metallic infrastructure.</li><li>Clean and linear initial installation through the warehouse.</li></ul>
+                        <ul class="lang-unit es"><li>Gran ahorro en cables e infraestructura metálica.</li><li>Instalación inicial limpia y lineal por la nave.</li></ul>
+                    </div>
+                    <div class="list-box desvantagens">
+                        <h4 class="lang-unit pt visible">Desvantagens</h4><h4 class="lang-unit en">Disadvantages</h4><h4 class="lang-unit es">Desventajas</h4>
+                        <ul class="lang-unit pt visible"><li>Se o cabo principal partir, tudo o que vem depois desliga.</li><li>Extrema dificuldade para achar conectores frouxos.</li></ul>
+                        <ul class="lang-unit en"><li>If the main cable breaks, everything down the line disconnects.</li><li>Extremely difficult to find loose connectors.</li></ul>
+                        <ul class="lang-unit es"><li>Si el cable principal se rompe, todo lo que sigue se desconecta.</li><li>Extrema dificultad para encontrar conectores flojos.</li></ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="tab-jogo" class="tab-content">
+        <section id="content-jogo" class="tab-content">
             <div class="game-card">
-                <div class="score-board"><span id="lbl-score">Pontos</span>: <span id="game-score">0</span></div>
-                <h2 id="lbl-g-title">Desafio de Redes Industriais</h2>
-                <p id="game-question" class="game-q">Qual meio físico é imune a ruídos de solda e isola eletricamente os painéis?</p>
-                <div class="game-options" id="game-options">
+                <div class="score-board">
+                    <span class="lang-unit pt visible">Pontos</span><span class="lang-unit en">Score</span><span class="lang-unit es">Puntos</span>: <span id="val-score">0</span>
+                </div>
+                
+                <h2 class="lang-unit pt visible">Desafio Tecnológico Industrial</h2>
+                <h2 class="lang-unit en">Industrial Technical Challenge</h2>
+                <h2 class="lang-unit es">Desafío Técnico Industrial</h2>
+
+                <div id="q-block-1">
+                    <p class="game-q class-pt lang-unit pt visible">1. Qual meio de transmissão é completamente imune a ruídos elétricos de motores e painéis de solda?</p>
+                    <p class="game-q class-en lang-unit en">1. Which transmission medium is completely immune to electrical noise from motors and welding panels?</p>
+                    <p class="game-q class-es lang-unit es">1. ¿Qué medio de transmisión es completamente inmune al ruido eléctrico de motores y paneles de soldadura?</p>
+                    <div class="game-options">
+                        <button class="opt-btn" onclick="ans(1, true)">A) Fibra Óptica / Fiber Optic</button>
+                        <button class="opt-btn" onclick="ans(1, false)">B) Par Trançado / Twisted Pair</button>
+                        <button class="opt-btn" onclick="ans(1, false)">C) Wireless</button>
                     </div>
-                <div class="feedback" id="game-feedback"></div>
+                </div>
+
+                <div id="q-block-2" style="display: none;">
+                    <p class="game-q class-pt lang-unit pt visible">2. Se o rompimento de um único cabo derrubar a comunicação de metade dos sensores da fábrica, qual topologia estava em uso?</p>
+                    <p class="game-q class-en lang-unit en">2. If a single cable break disconnects half the sensors in the factory, which topology was in use?</p>
+                    <p class="game-q class-es lang-unit es">2. Si la rotura de un solo cable interrumpe la comunicación de la mitad de los sensores de la fábrica, ¿qué topología estaba en uso?</p>
+                    <div class="game-options">
+                        <button class="opt-btn" onclick="ans(2, false)">A) Estrela / Star</button>
+                        <button class="opt-btn" onclick="ans(2, true)">B) Barramento / Bus</button>
+                    </div>
+                </div>
+
+                <div id="g-ok" class="feedback" style="background-color: rgba(0,204,102,0.15); color: var(--verde-sucesso); border: 1px solid var(--verde-sucesso);">
+                    <span class="lang-unit pt visible">Certo! +10 pontos salvos na rede.</span>
+                    <span class="lang-unit en">Correct! +10 network points saved.</span>
+                    <span class="lang-unit es">¡Correcto! +10 puntos de red guardados.</span>
+                </div>
+                <div id="g-err" class="feedback" style="background-color: rgba(255,51,51,0.15); color: var(--vermelho-erro); border: 1px solid var(--vermelho-erro);">
+                    <span class="lang-unit pt visible">Errado. Esse meio ou layout falharia nessa condição técnica. Tente outra vez!</span>
+                    <span class="lang-unit en">Wrong. This medium or layout would fail under this technical condition. Try again!</span>
+                    <span class="lang-unit es">Incorrecto. Este medio o diseño fallaría en esta condición técnica. ¡Inténtalo de nuevo!</span>
+                </div>
             </div>
         </section>
 
     </main>
 
     <footer>
-        <p>&copy; 2026 Guia Visual de Redes para Automação. Industrial Cyber Theme.</p>
+        <p>&copy; 2026 Guia Visual de Redes para Automação. Industrial Cybersecurity System.</p>
     </footer>
 
     <script>
-        // Objeto de Idiomas estruturado de forma estática
-        const langData = {
-            pt: {
-                title: "Guia Visual de Redes para Automação", tabCabos: "Cabos Industriais", tabTopologias: "Topologias", tabJogo: "Mini Jogo",
-                c1t: "Par Trançado", c1d: "Clique para ver onde e como este elemento de cobre blindado atua na infraestrutura industrial.",
-                c2t: "Fibra Óptica", c2d: "Clique para entender o poder da imunidade eletromagnética total por feixes de luz.",
-                c3t: "Wireless", c3d: "Clique para analisar as aplicações de rádio frequência sem fio no chão de fábrica.",
-                lblUso: "ONDE É USADO NA FÁBRICA?", lblDetalhes: "DETALHES TÉCNICOS ADICIONAIS", lblV: "Vantagens no Chão de Fábrica", lblD: "Desvantagens no Chão de Fábrica",
-                lblScore: "Pontos", lblGTitle: "Desafio de Redes Industriais", btnE: "Layout em Estrela", btnB: "Layout em Barramento",
-                parUso: "Usado para conectar os Controladores Lógicos Programáveis (CLPs) aos painéis de operação (IHMs) e switches de distribuição dentro das salas de controle.",
-                parTech: "O modelo STP possui malha metálica protetora contra ruídos elétricos gerados por motores pesados. Limite de 100 metros por segmento.",
-                fibraUso: "Usada na interligação de redes entre galpões distantes ou ambientes com altíssima interferência, como áreas de solda robótica.",
-                fibraTech: "Transmite dados por feixes de luz. Isolamento elétrico total, imune a surtos de tensão ou raios entre edifícios.",
-                wireUso: "Aplicado no monitoramento de sensores de difícil acesso, tanques externos e pontes rolantes.",
-                wireTech: "Utiliza WirelessHART ou Wi-Fi Industrial com criptografia pesada e salto de frequência para contornar barreiras metálicas.",
-                estTitle: "Layout em Estrela (Star Topology)", estDesc: "A arquitetura padrão das redes Ethernet modernas. Cada dispositivo vai direto para um Switch central.",
-                barTitle: "Layout em Barramento (Bus Topology)", barDesc: "A topologia tradicional usada em redes clássicas (Profibus). Todos compartilham o mesmo cabo linear.",
-                estV: ["Se um cabo falhar, apenas uma máquina para.", "Fácil de localizar cabos rompidos.", "Sem colisões de dados."],
-                estD: ["Se o switch quebrar, toda a rede cai.", "Consome mais metros de cabo."],
-                barV: ["Economia drástica de cabos.", "Arquitetura simples de passar por calhas."],
-                barD: ["Se o cabo principal partir, o restante cai.", "Difícil localizar conexões com mau contato."],
-                q1: "Qual meio físico é imune a ruídos de solda e isola eletricamente os painéis?",
-                q2: "Se o cabo principal se romper e desligar metade da fábrica, qual topologia estava em uso?",
-                correct: "Resposta correta! Excelente escolha técnica. +10 Pontos.",
-                wrong: "Resposta incorreta. Esse meio falharia nessas condições de fábrica. Tente novamente!"
-            },
-            en: {
-                title: "Visual Network Guide for Automation", tabCabos: "Industrial Cables", tabTopologias: "Topologies", tabJogo: "Mini Game",
-                c1t: "Twisted Pair", c1d: "Click to see where and how this shielded copper element acts in the industrial infrastructure.",
-                c2t: "Fiber Optic", c2d: "Click to understand the power of total electromagnetic immunity through light beams.",
-                c3t: "Wireless", c3d: "Click to analyze wireless radio frequency applications on the factory floor.",
-                lblUso: "WHERE IS IT USED IN THE FACTORY?", lblDetalhes: "ADDITIONAL TECHNICAL DETAILS", lblV: "Advantages on the Factory Floor", lblD: "Disadvantages on the Factory Floor",
-                lblScore: "Score", lblGTitle: "Industrial Network Challenge", btnE: "Star Layout", btnB: "Bus
+        let globalLang = 'pt';
+        let currentPoints = 0;
+
+        // Gerenciador Global de Idiomas
+        function changeLang(lang) {
+            globalLang = lang;
             
+            // Ajusta o estado visual dos botões de seleção
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+
+            // Varre e altera a visibilidade de todas as tags de idiomas do portal
+            document.querySelectorAll('.lang-unit').forEach(unit => {
+                if(unit.classList.contains(lang)) {
+                    unit.style.display = 'inline';
+                    // Correção de bloco para tags de parágrafos ou títulos
+                    if(unit.tagName === 'P' || unit.tagName === 'SPAN' && unit.parentElement.classList.contains('tab-btn') === false) {
+                        if(unit.tagName === 'P') unit.style.display = 'block';
+                    }
+                } else {
+                    unit.style.display = 'none';
+                }
+            });
+        }
+
+        // Gerenciador de Abas do Portal
+        function switchTab(target) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+            if(target === 'cabos') {
+                document.getElementById('content-cabos').classList.add('active');
+                document.getElementById('tab-b1').classList.add('active');
+            } else if(target === 'topologias') {
+                document.getElementById('content-topologias').classList.add('active');
+                document.getElementById('tab-b2').classList.add('active');
+            } else if(target === 'jogo') {
+                document.getElementById('content-jogo').classList.add('active');
+                document.getElementById('tab-b3').classList.add('active');
+            }
+        }
+
+        // Exibição de cards da primeira aba
+        function showCable(type) {
+            document.querySelectorAll('.c-panel').forEach(p => p.style.display = 'none');
+            const targetPanel = document.getElementById('panel-cable-' + type);
+            if(targetPanel) {
+                targetPanel.style.display = 'block';
+                targetPanel.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Exibição de botões da segunda aba
+        function showTopology(type) {
+            document.querySelectorAll('.t-panel').forEach(p => p.style.display = 'none');
+            document.getElementById('btopo-e').classList.remove('active');
+            document.getElementById('btopo-b').classList.remove('active');
+
+            if(type === 'estrela') {
+                document.getElementById('panel-topo-estrela').style.display = 'block';
+                document.getElementById('btopo-e').classList.add('active');
+                document.getElementById('panel-topo-estrela').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                document.getElementById('panel-topo-barramento').style.display = 'block';
+                document.getElementById('btopo-b').classList.add('active');
+                document.getElementById('panel-topo-barramento').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Sistema de validação do Mini Jogo Estático
+        function ans(questionNum, isCorrect) {
+            const okBox = document.getElementById('g-ok');
+            const errBox = document.getElementById('g-err');
+
+            okBox.style.display = 'none';
+            errBox.style.display = 'none';
+
+            if(isCorrect) {
+                currentPoints += 10;
+                document.getElementById('val-score').textContent = currentPoints;
+                okBox.style.display = 'block';
+
+                setTimeout(() => {
+                    okBox.style.display = 'none';
+                    if(questionNum === 1) {
+                        document.getElementById('q-block-1').style.display = 'none';
+                        document.getElementById('q-block-2').style.display = 'block';
+                    } else {
+                        document.getElementById('q-block-2').style.display = 'none';
+                        document.getElementById('q-block-1').style.display = 'block';
+                    }
+                }, 1800);
+            } else {
+                errBox.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
