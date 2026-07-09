@@ -2,218 +2,427 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
-    <title>Guia Visual de Redes para Automação Industrial</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Visual de Redes para Automação</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .lang-btn.active { border-color: #3b82f6; background-color: #eff6ff; color: #1d4ed8; }
+    </style>
 </head>
-<body>
+<body class="bg-gray-50 font-sans text-gray-800 min-h-screen flex flex-col">
 
-    <!-- ===== CABEÇALHO ===== -->
-    <header id="header">
-        <div class="container header-flex">
-            <div class="logo">
-                <i class="fas fa-network-wired"></i>
-                <span data-key="titulo">RedeLab</span>
+    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <i data-lucide="cpu" class="text-blue-600 w-8 h-8"></i>
+                <h1 id="nav-title" class="text-xl font-bold text-gray-900 tracking-tight">Guia Visual de Redes para Automação</h1>
             </div>
-            <div class="header-actions">
-                <button id="idiomaBtn" class="idioma-btn"><i class="fas fa-globe"></i> <span id="idiomaLabel">🇧🇷 PT</span></button>
-                <button id="menuHamburger" class="menu-hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
+            
+            <div class="flex bg-gray-100 p-1 rounded-lg border border-gray-200">
+                <button onclick="changeLanguage('pt')" id="btn-pt" class="lang-btn active px-3 py-1.5 text-xs font-semibold rounded-md transition-all cursor-pointer">PT</button>
+                <button onclick="changeLanguage('en')" id="btn-en" class="lang-btn px-3 py-1.5 text-xs font-semibold rounded-md transition-all cursor-pointer">EN</button>
+                <button onclick="changeLanguage('es')" id="btn-es" class="lang-btn px-3 py-1.5 text-xs font-semibold rounded-md transition-all cursor-pointer">ES</button>
             </div>
-            <nav id="navMenu" class="nav-menu">
-                <a href="#inicio" class="active" data-key="inicio"><i class="fas fa-home"></i> <span>Início</span></a>
-                <a href="#cabos" data-key="cabos"><i class="fas fa-plug"></i> <span>Cabos</span></a>
-                <a href="#topologias" data-key="topologias"><i class="fas fa-sitemap"></i> <span>Topologias</span></a>
-                <a href="#jogo" data-key="jogo"><i class="fas fa-gamepad"></i> <span>Jogo</span></a>
-                <a href="#sobre" data-key="sobre"><i class="fas fa-info-circle"></i> <span>Sobre</span></a>
-            </nav>
         </div>
     </header>
 
-    <main>
-        <!-- ===== BANNER ===== -->
-        <section id="inicio" class="banner">
-            <div class="banner-overlay"></div>
-            <div class="container banner-grid">
-                <div class="banner-text">
-                    <h1 data-key="bannerTitulo">Guia Visual de Redes para Automação Industrial</h1>
-                    <p class="subtitle" data-key="bannerSubtitulo">Aprenda como os dispositivos industriais se comunicam dentro de uma fábrica.</p>
-                    <a href="#cabos" class="btn-primary" data-key="explorar"><i class="fas fa-arrow-down"></i> Explorar</a>
+    <nav class="bg-gray-100 border-b border-gray-200 sticky top-[73px] z-40">
+        <div class="max-w-6xl mx-auto px-4 flex justify-center sm:justify-start gap-2 py-2">
+            <button onclick="switchTab('cabos')" id="tab-btn-cabos" class="px-5 py-2.5 font-medium text-sm rounded-lg transition-all bg-blue-600 text-white shadow-sm cursor-pointer flex items-center gap-2">
+                <i data-lucide="cable" class="w-4 h-4"></i> <span id="text-tab-cabos">Cabos Industriais</span>
+            </button>
+            <button onclick="switchTab('topologias')" id="tab-btn-topologias" class="px-5 py-2.5 font-medium text-sm rounded-lg transition-all bg-transparent text-gray-600 hover:bg-gray-200 cursor-pointer flex items-center gap-2">
+                <i data-lucide="network" class="w-4 h-4"></i> <span id="text-tab-topologias">Topologias</span>
+            </button>
+            <button onclick="switchTab('jogo')" id="tab-btn-jogo" class="px-5 py-2.5 font-medium text-sm rounded-lg transition-all bg-transparent text-gray-600 hover:bg-gray-200 cursor-pointer flex items-center gap-2">
+                <i data-lucide="gamepad-2" class="w-4 h-4"></i> <span id="text-tab-jogo">Mini Jogo</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+        
+        <section id="content-cabos" class="tab-content active animate-fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div onclick="showCableInfo('par')" class="bg-white rounded-xl shadow-md border border-gray-200 p-6 hover:shadow-xl transition-all cursor-pointer transform hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <div class="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+                            <i data-lucide="cable"></i>
+                        </div>
+                        <h3 id="card-par-title" class="text-xl font-bold mb-2">Par Trançado (Ethernet)</h3>
+                        <p id="card-par-desc" class="text-gray-600 text-sm">Clique para ver onde é usado no chão de fábrica.</p>
+                    </div>
+                    <span id="click-info-1" class="text-xs text-blue-600 font-semibold mt-4 block text-right">Ver mais →</span>
                 </div>
-                <div class="banner-img">
-                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=350&fit=crop&crop=center" alt="Fábrica automatizada">
+
+                <div onclick="showCableInfo('fibra')" class="bg-white rounded-xl shadow-md border border-gray-200 p-6 hover:shadow-xl transition-all cursor-pointer transform hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <div class="bg-purple-100 w-12 h-12 rounded-lg flex items-center justify-center text-purple-600 mb-4">
+                            <i data-lucide="zap"></i>
+                        </div>
+                        <h3 id="card-fibra-title" class="text-xl font-bold mb-2">Fibra Óptica</h3>
+                        <p id="card-fibra-desc" class="text-gray-600 text-sm">Clique para ver onde é usado no chão de fábrica.</p>
+                    </div>
+                    <span id="click-info-2" class="text-xs text-purple-600 font-semibold mt-4 block text-right">Ver mais →</span>
                 </div>
+
+                <div onclick="showCableInfo('wireless')" class="bg-white rounded-xl shadow-md border border-gray-200 p-6 hover:shadow-xl transition-all cursor-pointer transform hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <div class="bg-green-100 w-12 h-12 rounded-lg flex items-center justify-center text-green-600 mb-4">
+                            <i data-lucide="wifi"></i>
+                        </div>
+                        <h3 id="card-wire-title" class="text-xl font-bold mb-2">Wireless (Sem Fio)</h3>
+                        <p id="card-wire-desc" class="text-gray-600 text-sm">Clique para ver onde é usado no chão de fábrica.</p>
+                    </div>
+                    <span id="click-info-3" class="text-xs text-green-600 font-semibold mt-4 block text-right">Ver mais →</span>
+                </div>
+            </div>
+
+            <div id="cable-explanation" class="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-6 hidden">
+                <h4 id="cable-expl-title" class="text-lg font-bold text-blue-900 mb-2"></h4>
+                <p id="cable-expl-text" class="text-blue-800"></p>
             </div>
         </section>
 
-        <!-- ===== CABOS INDUSTRIAIS ===== -->
-        <section id="cabos" class="section">
-            <div class="container">
-                <h2 data-key="cabosTitulo"><i class="fas fa-plug" style="color: var(--laranja);"></i> Cabos Industriais</h2>
-                <p class="section-desc" data-key="cabosDesc">Os principais meios de comunicação utilizados em redes industriais.</p>
-                <div class="card-grid">
-                    <!-- Card 1: Par Trançado -->
-                    <div class="card-item">
-                        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&h=200&fit=crop" alt="Cabo par trançado">
-                        <div class="card-body">
-                            <h3><i class="fas fa-ethernet"></i> <span data-key="parTitulo">Par Trançado</span></h3>
-                            <button class="btn-saiba" data-target="det1" data-key="verDetalhes">Ver detalhes</button>
-                            <div id="det1" class="card-detail">
-                                <ul>
-                                    <li><i class="fas fa-microchip"></i> <span data-key="parClps">CLPs</span></li>
-                                    <li><i class="fas fa-desktop"></i> <span data-key="parIhms">IHMs</span></li>
-                                    <li><i class="fas fa-server"></i> <span data-key="parSwitches">Switches Industriais</span></li>
-                                    <li><i class="fas fa-laptop"></i> <span data-key="parComputadores">Computadores industriais</span></li>
-                                </ul>
-                                <p data-key="parTexto">O par trançado é utilizado para comunicação Ethernet dentro das fábricas, conectando equipamentos de controle e supervisão.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Card 2: Fibra Óptica -->
-                    <div class="card-item">
-                        <img src="https://images.unsplash.com/photo-1616400619175-5beda3a17896?w=400&h=200&fit=crop" alt="Fibra óptica">
-                        <div class="card-body">
-                            <h3><i class="fas fa-fiber-optic"></i> <span data-key="fibraTitulo">Fibra Óptica</span></h3>
-                            <button class="btn-saiba" data-target="det2" data-key="verDetalhes">Ver detalhes</button>
-                            <div id="det2" class="card-detail">
-                                <ul>
-                                    <li><i class="fas fa-arrows-alt-h"></i> <span data-key="fibraDistancia">Grandes distâncias</span></li>
-                                    <li><i class="fas fa-building"></i> <span data-key="fibraSetores">Ligação entre setores</span></li>
-                                    <li><i class="fas fa-bolt"></i> <span data-key="fibraInterferencia">Ambientes com interferência elétrica</span></li>
-                                </ul>
-                                <p data-key="fibraTexto">A fibra óptica transmite dados por luz, oferecendo alta velocidade e proteção contra interferências.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Card 3: Wireless -->
-                    <div class="card-item">
-                        <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=200&fit=crop" alt="Wireless industrial">
-                        <div class="card-body">
-                            <h3><i class="fas fa-wifi"></i> <span data-key="wirelessTitulo">Wireless</span></h3>
-                            <button class="btn-saiba" data-target="det3" data-key="verDetalhes">Ver detalhes</button>
-                            <div id="det3" class="card-detail">
-                                <ul>
-                                    <li><i class="fas fa-microchip"></i> <span data-key="wirelessSensores">Sensores</span></li>
-                                    <li><i class="fas fa-robot"></i> <span data-key="wirelessAgvs">AGVs</span></li>
-                                    <li><i class="fas fa-tablet-alt"></i> <span data-key="wirelessTablets">Tablets industriais</span></li>
-                                    <li><i class="fas fa-mobile-alt"></i> <span data-key="wirelessMoveis">Equipamentos móveis</span></li>
-                                </ul>
-                                <p data-key="wirelessTexto">O Wireless permite comunicação sem cabos, oferecendo mobilidade na indústria.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <section id="content-topologias" class="tab-content">
+            <div class="flex flex-wrap gap-4 justify-center mb-8">
+                <button onclick="showTopology('estrela')" id="btn-estrela" class="px-6 py-3 bg-white border border-gray-300 rounded-xl font-semibold shadow-sm hover:bg-gray-50 cursor-pointer transition-all flex items-center gap-2">
+                    <i data-lucide="star" class="text-amber-500"></i> <span id="text-btn-estrela">Layout em Estrela</span>
+                </button>
+                <button onclick="showTopology('barramento')" id="btn-barramento" class="px-6 py-3 bg-white border border-gray-300 rounded-xl font-semibold shadow-sm hover:bg-gray-50 cursor-pointer transition-all flex items-center gap-2">
+                    <i data-lucide="git-commit" class="text-indigo-500"></i> <span id="text-btn-barramento">Layout em Barramento</span>
+                </button>
             </div>
-        </section>
 
-        <!-- ===== TOPOLOGIAS ===== -->
-        <section id="topologias" class="section" style="background: #f0f6fe;">
-            <div class="container">
-                <h2 data-key="topoTitulo"><i class="fas fa-sitemap" style="color: var(--laranja);"></i> Topologias de Rede</h2>
-                <p class="section-desc" data-key="topoDesc">Conheça os principais layouts utilizados em redes industriais.</p>
-                <div class="topo-buttons">
-                    <button class="topo-btn" data-topo="estrela"><i class="fas fa-star"></i> <span data-key="estrela">Estrela</span></button>
-                    <button class="topo-btn" data-topo="barramento"><i class="fas fa-bars"></i> <span data-key="barramento">Barramento</span></button>
-                </div>
-                <div id="topo-estrela" class="topo-detail">
-                    <div class="topo-grid">
-                        <div class="topo-img">
-                            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop" alt="Topologia estrela">
-                        </div>
-                        <div class="topo-info">
-                            <h4><i class="fas fa-star" style="color: var(--laranja);"></i> <span data-key="estrela">Estrela</span></h4>
-                            <p data-key="estrelaExplicacao">Todos os equipamentos são conectados a um equipamento central chamado switch.</p>
-                            <div class="vantagens">
-                                <span><i class="fas fa-check-circle"></i> <span data-key="estrelaV1">Fácil manutenção</span></span>
-                                <span><i class="fas fa-check-circle"></i> <span data-key="estrelaV2">Fácil expansão</span></span>
-                                <span><i class="fas fa-check-circle"></i> <span data-key="estrelaV3">Fácil identificar falhas</span></span>
-                            </div>
-                            <div class="desvantagens">
-                                <span><i class="fas fa-exclamation-triangle"></i> <span data-key="estrelaD1">Depende do equipamento central</span></span>
-                                <span><i class="fas fa-exclamation-triangle"></i> <span data-key="estrelaD2">Usa mais cabos</span></span>
-                            </div>
-                        </div>
+            <div id="topology-display" class="bg-white rounded-xl shadow-md border border-gray-200 p-6 hidden">
+                <h3 id="topo-title" class="text-2xl font-bold mb-3 text-gray-900"></h3>
+                <p id="topo-desc" class="text-gray-600 mb-6 border-b pb-4"></p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-green-50 p-5 rounded-lg border border-green-200">
+                        <h4 id="topo-v-title" class="font-bold text-green-800 mb-3 flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-5 h-5"></i> Vantagens
+                        </h4>
+                        <ul id="topo-vantagens" class="list-disc list-inside text-green-700 space-y-2 text-sm"></ul>
                     </div>
-                </div>
-                <div id="topo-barramento" class="topo-detail">
-                    <div class="topo-grid">
-                        <div class="topo-img">
-                            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop" alt="Topologia barramento">
-                        </div>
-                        <div class="topo-info">
-                            <h4><i class="fas fa-bars" style="color: var(--laranja);"></i> <span data-key="barramento">Barramento</span></h4>
-                            <p data-key="barramentoExplicacao">Todos os equipamentos utilizam o mesmo cabo principal.</p>
-                            <div class="vantagens">
-                                <span><i class="fas fa-check-circle"></i> <span data-key="barramentoV1">Baixo custo</span></span>
-                                <span><i class="fas fa-check-circle"></i> <span data-key="barramentoV2">Poucos cabos</span></span>
-                            </div>
-                            <div class="desvantagens">
-                                <span><i class="fas fa-exclamation-triangle"></i> <span data-key="barramentoD1">Falhas afetam toda a rede</span></span>
-                                <span><i class="fas fa-exclamation-triangle"></i> <span data-key="barramentoD2">Difícil manutenção</span></span>
-                            </div>
-                        </div>
+                    <div class="bg-red-50 p-5 rounded-lg border border-red-200">
+                        <h4 id="topo-d-title" class="font-bold text-red-800 mb-3 flex items-center gap-2">
+                            <i data-lucide="x-circle" class="w-5 h-5"></i> Desvantagens
+                        </h4>
+                        <ul id="topo-desvantagens" class="list-disc list-inside text-red-700 space-y-2 text-sm"></ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ===== JOGO ===== -->
-        <section id="jogo" class="section">
-            <div class="container">
-                <h2 data-key="jogoTitulo"><i class="fas fa-gamepad" style="color: var(--laranja);"></i> Desafio das Redes Industriais</h2>
-                <p class="section-desc" data-key="jogoDesc">Teste seus conhecimentos com 10 perguntas sobre redes industriais.</p>
-                <div class="quiz-container" id="quizContainer">
-                    <div class="quiz-header">
-                        <span id="perguntaNum" data-key="perguntaNum">0/10</span>
-                        <span id="pontuacao">⭐ 0</span>
-                    </div>
-                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div id="perguntaTexto" class="pergunta-texto" data-key="iniciarQuiz">Clique em "Iniciar Quiz"</div>
-                    <div class="quiz-opcoes" id="opcoesContainer"></div>
-                    <div id="explicacao" class="explicacao"></div>
-                    <div class="quiz-actions">
-                        <button class="btn-jogar" id="btnIniciarQuiz" data-key="iniciarQuiz"><i class="fas fa-play"></i> Iniciar Quiz</button>
-                        <button class="btn-jogar" id="btnProximo" style="display:none;" data-key="proxima">Próxima ➜</button>
-                        <button class="btn-jogar" id="btnReiniciarQuiz" style="display:none;" data-key="jogarNovamente"><i class="fas fa-redo"></i> Jogar novamente</button>
-                    </div>
-                    <div id="resultadoFinal" class="resultado-final"></div>
+        <section id="content-jogo" class="tab-content">
+            <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md border border-gray-200 p-6 text-center">
+                <h3 id="game-title" class="text-2xl font-bold mb-2">Desafio do Técnico de Redes</h3>
+                <p id="game-subtitle" class="text-gray-600 mb-6">Ajude a fábrica conectando a tecnologia certa ao problema!</p>
+                
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
+                    <span id="game-problem-tag" class="text-xs uppercase font-extrabold tracking-wider bg-blue-100 text-blue-800 px-2.5 py-1 rounded-md">Problema Técnico</span>
+                    <p id="game-question" class="text-lg font-medium text-gray-800 mt-4 h-16 flex items-center justify-center">Carregando...</p>
                 </div>
+
+                <div id="game-options" class="grid grid-cols-1 gap-3">
+                    </div>
+
+                <div id="game-feedback" class="mt-4 p-3 rounded-lg font-semibold hidden"></div>
             </div>
         </section>
 
-        <!-- ===== SOBRE ===== -->
-        <section id="sobre" class="section" style="background: #f0f6fe;">
-            <div class="container">
-                <h2 data-key="sobreTitulo"><i class="fas fa-info-circle" style="color: var(--laranja);"></i> Sobre</h2>
-                <div class="sobre-grid">
-                    <div class="sobre-texto">
-                        <p data-key="sobreTexto">Este projeto apresenta conceitos básicos de redes industriais utilizadas na automação. Desenvolvido com HTML5, CSS3 e JavaScript puro.</p>
-                        <p data-key="sobreTexto2">Ideal para estudantes e profissionais que desejam entender como os dispositivos se comunicam no chão de fábrica.</p>
-                    </div>
-                    <div class="sobre-img">
-                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=250&fit=crop" alt="Fábrica moderna">
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <!-- ===== RODAPÉ ===== -->
-    <footer>
-        <div class="container">
-            <p><i class="fas fa-network-wired"></i> <span data-key="rodapeTitulo">Guia Visual de Redes Industriais</span></p>
-            <div class="footer-icons">
-                <i class="fab fa-html5"></i>
-                <i class="fab fa-css3-alt"></i>
-                <i class="fab fa-js"></i>
-                <i class="fab fa-github"></i>
-            </div>
-            <p style="font-size:0.85rem; opacity:0.7;" data-key="rodapeCompativel">Compatível com GitHub Pages</p>
-            <p style="font-size:0.75rem; opacity:0.5;">Imagens: Unsplash</p>
+    <footer class="bg-white border-t border-gray-200 py-4 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 text-center text-xs text-gray-500">
+            &copy; 2026 - Guia Visual de Redes para Automação. Desenvolvido para Chão de Fábrica.
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Dados de tradução do site
+        const translations = {
+            pt: {
+                title: "Guia Visual de Redes para Automação",
+                tabCabos: "Cabos Industriais",
+                tabTopologias: "Topologias",
+                tabJogo: "Mini Jogo",
+                cardParTitle: "Par Trançado (Ethernet)",
+                cardParDesc: "Mais comum em escritórios e conexões de CLPs rápidos.",
+                cardFibraTitle: "Fibra Óptica",
+                cardFibraDesc: "Imune a ruídos e excelente para longas distâncias.",
+                cardWireTitle: "Wireless (Sem Fio)",
+                cardWireDesc: "Para monitorar sensores móveis ou de difícil acesso.",
+                clickMore: "Ver mais →",
+                cableParExpl: "<strong>Onde é usado:</strong> É o cabo de rede padrão (como o Cat6) blindado. É usado para conectar CLPs (Controladores Lógicos Programáveis), IHMs (Telas) e computadores da engenharia à rede principal em distâncias de até 100 metros.",
+                cableFibraExpl: "<strong>Onde é usado:</strong> Usado para interligar galpões distantes na fábrica ou em locais com motores gigantescos que geram muita interferência eletromagnética (ruído elétrico), pois a fibra transmite luz, não eletricidade.",
+                cableWireExpl: "<strong>Onde é usado:</strong> Usado através de protocolos como Wi-Fi Industrial, WirelessHART ou Bluetooth para coletar dados de pontes rolantes, AGVs (veículos autônomos de carga) ou sensores em tanques de difícil acesso.",
+                btnEstrela: "Layout em Estrela",
+                btnBarramento: "Layout em Barramento",
+                topoEstrelaTitle: "Topologia em Estrela",
+                topoEstrelaDesc: "Todos os dispositivos (CLPs, sensores, IHMs) são conectados individualmente a um dispositivo central, geralmente um Switch Industrial.",
+                topoBarramentoTitle: "Topologia em Barramento",
+                topoBarramentoDesc: "Todos os dispositivos compartilham a mesma linha física de comunicação (um único cabo longo que passa por todos). Muito comum em redes antigas como Fieldbus (Profibus DP, Modbus RTU).",
+                vantagens: "Vantagens",
+                desvantagens: "Desvantagens",
+                vEstrela: ["Se um cabo quebrar, apenas aquele dispositivo para.", "Fácil de encontrar defeitos.", "Alta velocidade e desempenho."],
+                dEstrela: ["Usa muito mais cabo.", "Se o Switch Central falhar, a rede inteira cai."],
+                vBarramento: ["Economiza muito cabo no chão de fábrica.", "Fácil e barato de expandir adicionando nós na linha."],
+                dBarramento: ["Se o cabo principal partir, toda a rede para.", "Mais difícil diagnosticar qual ponto está com defeito."],
+                gameTitle: "Desafio do Técnico de Redes",
+                gameSubtitle: "Escolha a solução correta para o cenário da fábrica:",
+                gameWin: "Parabéns! Resposta correta. 🌟",
+                gameLose: "Ops! Tente novamente. ❌"
+            },
+            en: {
+                title: "Visual Network Guide for Automation",
+                tabCabos: "Industrial Cables",
+                tabTopologias: "Topologies",
+                tabJogo: "Mini Game",
+                cardParTitle: "Twisted Pair (Ethernet)",
+                cardParDesc: "Most common in offices and fast PLC connections.",
+                cardFibraTitle: "Fiber Optic",
+                cardFibraDesc: "Immune to noise and excellent for long distances.",
+                cardWireTitle: "Wireless",
+                cardWireDesc: "For monitoring mobile or hard-to-reach sensors.",
+                clickMore: "See more →",
+                cableParExpl: "<strong>Where it is used:</strong> Shielded standard network cable (like Cat6). Used to connect PLCs, HMIs, and engineering computers to the main factory network within 100 meters.",
+                cableFibraExpl: "<strong>Where it is used:</strong> Used to link distant warehouses or areas with heavy machinery creating electromagnetic interference, as fiber transmits light, not electricity.",
+                cableWireExpl: "<strong>Where it is used:</strong> Used via Industrial Wi-Fi or WirelessHART to track AGVs (autonomous guided vehicles), cranes, or sensors in hard-to-reach industrial tanks.",
+                btnEstrela: "Star Layout",
+                btnBarramento: "Bus Layout",
+                topoEstrelaTitle: "Star Topology",
+                topoEstrelaDesc: "All devices (PLCs, sensors, HMIs) connect individually to a central hardware piece, usually an Industrial Switch.",
+                topoBarramentoTitle: "Bus Topology",
+                topoBarramentoDesc: "All devices share a single physical communication line. Very common in legacy Fieldbus networks (Profibus DP, Modbus RTU).",
+                vantagens: "Advantages",
+                desvantagens: "Disadvantages",
+                vEstrela: ["If one cable breaks, only that device stops.", "Easy to troubleshoot.", "High speed and performance."],
+                dEstrela: ["Requires a lot more cabling.", "If the Central Switch fails, the whole network goes down."],
+                vBarramento: ["Saves a lot of cable on the factory floor.", "Easy and cheap to expand by adding nodes along the line."],
+                dBarramento: ["If the main cable breaks, the whole network stops.", "Harder to diagnose which specific node has a fault."],
+                gameTitle: "Network Technician Challenge",
+                gameSubtitle: "Choose the correct solution for the factory scenario:",
+                gameWin: "Congratulations! Correct answer. 🌟",
+                gameLose: "Ops! Try again. ❌"
+            },
+            es: {
+                title: "Guía Visual de Redes para Automatización",
+                tabCabos: "Cables Industriales",
+                tabTopologias: "Topologías",
+                tabJogo: "Mini Juego",
+                cardParTitle: "Par Trenzado (Ethernet)",
+                cardParDesc: "Más común en oficinas y conexiones rápidas de PLC.",
+                cardFibraTitle: "Fibra Óptica",
+                cardFibraDesc: "Inmune al ruido y excelente para largas distancias.",
+                cardWireTitle: "Inalámbrico (Wireless)",
+                cardWireDesc: "Para monitorear sensores móviles o de difícil acceso.",
+                clickMore: "Ver más →",
+                cableParExpl: "<strong>Dónde se usa:</strong> Cable de red apantallado (como Cat6). Se usa para conectar PLCs, HMIs y computadoras de ingeniería a la red principal en distancias de hasta 100 metros.",
+                cableFibraExpl: "<strong>Dónde se usa:</strong> Se usa para conectar almacenes distantes o áreas con grandes motores que generan interferencias magnéticas, ya que la fibra transmite luz, no electricidad.",
+                cableWireExpl: "<strong>Dónde se usa:</strong> Utilizado mediante Wi-Fi Industrial o WirelessHART para recopilar datos de grúas viajeras, AGVs (vehículos autónomos) o tanques de difícil acceso.",
+                btnEstrela: "Diseño en Estrella",
+                btnBarramento: "Diseño en Bus (Barra)",
+                topoEstrelaTitle: "Topología en Estrella",
+                topoEstrelaDesc: "Todos los dispositivos se conectan individualmente a un dispositivo central, generalmente un Switch Industrial.",
+                topoBarramentoTitle: "Topología en Bus",
+                topoBarramentoDesc: "Todos los dispositivos comparten la misma línea física de comunicación (un único cable largo). Común en redes heredadas como Profibus DP o Modbus RTU.",
+                vantagens: "Ventajas",
+                desvantagens: "Desventajas",
+                vEstrela: ["Si un cable se rompe, solo ese dispositivo falla.", "Fácil de encontrar problemas.", "Alta velocidad y rendimiento."],
+                dEstrela: ["Usa mucho más cable.", "Si el Switch central falla, toda la red se cae."],
+                vBarramento: ["Ahorra mucho cable en la fábrica.", "Fácil y barato de ampliar añadiendo nodos en la línea."],
+                dBarramento: ["Si el cable principal se corta, toda la red se detiene.", "Más difícil diagnosticar qué punto está fallando."],
+                gameTitle: "Desafío del Técnico de Redes",
+                gameSubtitle: "¡Elige la solución adecuada para el problema de la fábrica!",
+                gameWin: "¡Felicidades! Respuesta correcta. 🌟",
+                gameLose: "¡Oops! Inténtalo de nuevo. ❌"
+            }
+        };
+
+        let currentLang = 'pt';
+
+        // Base de Dados do Jogo de Perguntas
+        const gameQuestions = {
+            pt: [
+                { q: "Precisamos conectar dois galpões a 1km de distância com motores gerando interferência. O que usar?", a: ["Fibra Óptica", "Par Trançado", "Wireless"], correct: 0 },
+                { q: "Queremos economizar o máximo de cabos interligando 5 máquinas em sequência. Qual topologia?", a: ["Estrela", "Barramento"], correct: 1 },
+                { q: "Coletar dados de temperatura de um robô que se move livremente pela fábrica. O que usar?", a: ["Par Trançado", "Wireless", "Fibra Óptica"], correct: 1 }
+            ],
+            en: [
+                { q: "We need to connect two warehouses 1km away with high electromagnetic noise. What to use?", a: ["Fiber Optic", "Twisted Pair", "Wireless"], correct: 0 },
+                { q: "We want to save as much cable as possible connecting 5 machines in a sequence. Which topology?", a: ["Star", "Bus"], correct: 1 },
+                { q: "Collect temperature data from a robot moving freely around the factory floor. What to use?", a: ["Twisted Pair", "Wireless", "Fiber Optic"], correct: 1 }
+            ],
+            es: [
+                { q: "Necesitamos conectar dos naves a 1km de distancia con motores generando interferencias. ¿Qué usar?", a: ["Fibra Óptica", "Par Trenzado", "Wireless"], correct: 0 },
+                { q: "Queremos ahorrar el máximo de cables conectando 5 máquinas en secuencia. ¿Qué topología?", a: ["Estrella", "Bus"], correct: 1 },
+                { q: "Recolectar datos de temperatura de un robot móvil en la planta. ¿Qué usar?", a: ["Par Trenzado", "Wireless", "Fibra Óptica"], correct: 1 }
+            ]
+        };
+
+        let currentQuestionIndex = 0;
+
+        // Atualiza os textos da tela com o idioma escolhido
+        function updateUI() {
+            const lang = translations[currentLang];
+            document.getElementById('nav-title').textContent = lang.title;
+            document.getElementById('text-tab-cabos').textContent = lang.tabCabos;
+            document.getElementById('text-tab-topologias').textContent = lang.tabTopologias;
+            document.getElementById('text-tab-jogo').textContent = lang.tabJogo;
+            
+            document.getElementById('card-par-title').textContent = lang.cardParTitle;
+            document.getElementById('card-par-desc').textContent = lang.cardParDesc;
+            document.getElementById('card-fibra-title').textContent = lang.cardFibraTitle;
+            document.getElementById('card-fibra-desc').textContent = lang.cardFibraDesc;
+            document.getElementById('card-wire-title').textContent = lang.cardWireTitle;
+            document.getElementById('card-wire-desc').textContent = lang.cardWireDesc;
+            
+            document.getElementById('click-info-1').textContent = lang.clickMore;
+            document.getElementById('click-info-2').textContent = lang.clickMore;
+            document.getElementById('click-info-3').textContent = lang.clickMore;
+
+            document.getElementById('text-btn-estrela').textContent = lang.btnEstrela;
+            document.getElementById('text-btn-barramento').textContent = lang.btnBarramento;
+
+            document.getElementById('game-title').textContent = lang.gameTitle;
+            document.getElementById('game-subtitle').textContent = lang.gameSubtitle;
+
+            // Fecha displays dinâmicos para evitar inconsistências pós-tradução
+            document.getElementById('cable-explanation').classList.add('hidden');
+            document.getElementById('topology-display').classList.add('hidden');
+            
+            loadGameQuestion();
+        }
+
+        function changeLanguage(langCode) {
+            currentLang = langCode;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${langCode}`).classList.add('active');
+            updateUI();
+        }
+
+        // Sistema de Abas Alternáveis
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`content-${tabName}`).classList.add('active');
+
+            // Atualiza botões visuais da aba ativa
+            ['cabos', 'topologias', 'jogo'].forEach(t => {
+                const btn = document.getElementById(`tab-btn-${t}`);
+                if(t === tabName) {
+                    btn.classList.replace('bg-transparent', 'bg-blue-600');
+                    btn.classList.replace('text-gray-600', 'text-white');
+                    btn.classList.add('shadow-sm');
+                } else {
+                    btn.classList.replace('bg-blue-600', 'bg-transparent');
+                    btn.classList.replace('text-white', 'text-gray-600');
+                    btn.classList.remove('shadow-sm');
+                }
+            });
+        }
+
+        // Eventos da Aba 1 (Cabos)
+        function showCableInfo(cableType) {
+            const panel = document.getElementById('cable-explanation');
+            const title = document.getElementById('cable-expl-title');
+            const text = document.getElementById('cable-expl-text');
+            const data = translations[currentLang];
+
+            panel.classList.remove('hidden');
+
+            if (cableType === 'par') {
+                title.textContent = data.cardParTitle;
+                text.innerHTML = data.cableParExpl;
+            } else if (cableType === 'fibra') {
+                title.textContent = data.cardFibraTitle;
+                text.innerHTML = data.cableFibraExpl;
+            } else {
+                title.textContent = data.cardWireTitle;
+                text.innerHTML = data.cableWireExpl;
+            }
+        }
+
+        // Eventos da Aba 2 (Topologias)
+        function showTopology(topoType) {
+            const display = document.getElementById('topology-display');
+            display.classList.remove('hidden');
+            
+            const title = document.getElementById('topo-title');
+            const desc = document.getElementById('topo-desc');
+            const vList = document.getElementById('topo-vantagens');
+            const dList = document.getElementById('topo-desvantagens');
+            
+            document.getElementById('topo-v-title').childNodes[2].textContent = " " + translations[currentLang].vantagens;
+            document.getElementById('topo-d-title').childNodes[2].textContent = " " + translations[currentLang].desvantagens;
+
+            vList.innerHTML = "";
+            dList.innerHTML = "";
+
+            const data = translations[currentLang];
+
+            if(topoType === 'estrela') {
+                title.textContent = data.topoEstrelaTitle;
+                desc.textContent = data.topoEstrelaDesc;
+                data.vEstrela.forEach(v => vList.innerHTML += `<li>${v}</li>`);
+                data.dEstrela.forEach(d => dList.innerHTML += `<li>${d}</li>`);
+            } else {
+                title.textContent = data.topoBarramentoTitle;
+                desc.textContent = data.topoBarramentoDesc;
+                data.vBarramento.forEach(v => vList.innerHTML += `<li>${v}</li>`);
+                data.dBarramento.forEach(d => dList.innerHTML += `<li>${d}</li>`);
+            }
+        }
+
+        // Mecânica do Mini Jogo Interativo
+        function loadGameQuestion() {
+            const questionData = gameQuestions[currentLang][currentQuestionIndex];
+            document.getElementById('game-question').textContent = questionData.q;
+            
+            const optionsContainer = document.getElementById('game-options');
+            optionsContainer.innerHTML = "";
+            
+            const feedback = document.getElementById('game-feedback');
+            feedback.classList.add('hidden');
+
+            questionData.a.forEach((option, idx) => {
+                optionsContainer.innerHTML += `
+                    <button onclick="checkAnswer(${idx})" class="w-full text-left p-3 border border-gray-300 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-all cursor-pointer font-medium text-sm">
+                        ${option}
+                    </button>
+                `;
+            });
+        }
+
+        function checkAnswer(chosenIndex) {
+            const questionData = gameQuestions[currentLang][currentQuestionIndex];
+            const feedback = document.getElementById('game-feedback');
+            feedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+
+            if(chosenIndex === questionData.correct) {
+                feedback.textContent = translations[currentLang].gameWin;
+                feedback.classList.add('bg-green-100', 'text-green-800');
+                
+                // Passa para a próxima pergunta após 2 segundos de feedback positivo
+                setTimeout(() => {
+                    currentQuestionIndex = (currentQuestionIndex + 1) % gameQuestions[currentLang].length;
+                    loadGameQuestion();
+                }, 2000);
+            } else {
+                feedback.textContent = translations[currentLang].gameLose;
+                feedback.classList.add('bg-red-100', 'text-red-800');
+            }
+        }
+
+        // Inicializa o Lucide Icons e a interface do app
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+            updateUI();
+        });
+    </script>
 </body>
 </html>
-    
